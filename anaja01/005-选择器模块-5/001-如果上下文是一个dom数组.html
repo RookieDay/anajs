@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<style type="text/css">
+			.rect {
+				width: 400px;
+				height: 50px;
+				margin: 10px 0;
+			}
+			.c {
+				border: 1px solid red;
+			}
+			.c1 { border: 1px solid green; }
+			.c2 { border: 1px solid blue; }
+		</style>
+		
+		<script src="common.js"></script>
+	</head>
+	<body>
+		<div class="c3">
+			<div class="c1 rect"></div>
+			<div class="c2 rect"></div>
+			<div class="c rect"></div>
+			<div class="c1 rect"></div>
+		</div>
+		<hr />
+		<div>
+			<div class="c rect"></div>
+			<div class="c1 rect"></div>
+		</div>
+		<hr />
+		<div class="c3">
+			<div class="c rect"></div>
+		</div>
+	</body>
+	<script type="text/javascript">
+		var l = get( '.c3' );
+		each( get( '.c', l ), function () { 
+			this.style.backgroundColor = 'pink';
+		} );
+	</script>
+</html>
+

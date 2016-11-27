@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<style>
+			div, p {
+				width: 100px; height:30px; border:1px solid red; margin: 10px 0;
+			}
+		</style>
+		<script>
+			var myPush = function( target, els ) {
+				var j = target.length,
+					i = 0;
+				// Can't trust NodeList.length
+				while ( (target[j++] = els[i++]) ) {}
+				target.length = j - 1;
+			};
+			
+		</script>
+	</head>
+	<body>
+		<div></div>
+		<div></div>
+		<p></p>
+		<p></p>
+	</body>
+	<script>
+		// 伪代码
+		var push = [].push;
+		try {
+			push 可用
+		} catch ( e ) {
+			push = {...};
+		}
+		
+		
+
+		// 如果利用 get 方法获得多个元素的话, 就会得到多个数组
+		// 为了简化开发, 可以考虑将其合并到一个数组中
+		// 调用多次 get 方法, 如果想要多个数组就可以使用多个数组
+		// 想要一个数组, 就得到一个数组
+		var getTag = function ( tag, results ) {
+			results = results || [];
+			
+			push.apply( results, document.getElementsByTagName( tag ) );
+			
+			
+			return results;
+		};
+		
+		var each = function ( arr, fn ) {
+			for ( var i = 0; i < arr.length; i++ ) {
+				if ( fn.call( arr[ i ], i, arr[ i ] ) === false ) {
+					break;
+				}
+			}
+		};
+		
+		/*
+		var list1 = getTag( 'div' );
+		var list2 = getTag( 'p' );
+		
+		each( list1, function () {
+			this.style.backgroundColor = 'orange';
+		});
+		each( list2, function () {
+			this.style.backgroundColor = 'orange';
+		});		
+		*/
+		
+		
+		each( getTag( 'p', getTag( 'div' ) ), function () {
+			this.style.backgroundColor = 'red';
+		});
+		
+		
+		
+		
+		
+	</script>
+</html>
+
+
+
+
+
+
+
+

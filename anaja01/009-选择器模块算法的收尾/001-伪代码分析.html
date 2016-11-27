@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+    <style type="text/css">
+        .rect {
+            width: 400px;
+            height: 50px;
+            margin: 10px 0;
+        }
+        
+        .c {
+            border: 1px solid red;
+        }
+        
+        .c1 {
+            border: 1px solid green;
+        }
+        
+        .c2 {
+            border: 1px solid blue;
+        }
+    </style>
+    <script src="common.js"></script>
+    <script type="text/javascript">
+        // 要实现的功能
+        // 1, 传入一个基本选择器( id, class, tag, * ), 获得元素数组( rquickExpr )
+        // 2, 传入一个组合选择器, 将结果数组返回
+        //		多次调用基本选择器函数, 在将结果合并
+        //		result.push.apply( result, get( ... ) );
+        //      result = get( ..., results );
+        // 3, 传入有一个 后代元素选择器, 返回符合要求的结果
+        //		得到前面的选择结果, 在使用后面的选择器过滤
+        //		'.dv .c'
+        //      '#dv>.c'
+        //		'#dv+p'
+        //			
+        //    getSub( selector, context )
+        //    getPrivious
+        //	  getNext
+        //    ...
+
+
+
+        // 要实现的代码
+        //			var list1 = select( '#dv' );
+        //			var list2 = select( '.dv' );
+        //			var list3 = select( 'div' );
+        //			var list4 = select( '#dv, .c, p' );
+        //			var list5 = select( '#dv .c, p .c, div' );
+
+        // 最简单的做法
+        // 我们已经知道里面可以有组合, 可能有后代, 但是最终是转换成基本
+        var select = function(selector) {
+            var selectors = selector.split(',');
+            var results = [];
+            for (var i = 0; i < selectors.length; i++) {
+                var singleSelector = selectors[i]; // 可能包含后代的
+
+                var subSelectors = singleSelector.split(' ');
+                // 在 subSelectors[ j ] 中找后代元素
+                // subSelectors 是 '.dv .c'
+                var res = undefined;
+                for (var j = 0; j < subSelectors.length; j++) {
+                    var s = subSelectors[j];
+                    // 首先在 全部标签中找 s, 然后在结果中找 s
+                    res = get(s, res);
+                }
+
+                results.push.apply(results, res);
+            }
+            return results;
+        };
+    </script>
+</head>
+
+<body>
+    <div class="c3">
+        <div class="c1 rect">
+            <div class="c" style="border: 1px dashed green;">123</div>
+        </div>
+        <div class="c2 rect"></div>
+        <div class="c rect"></div>
+        <div class="c1 rect"></div>
+    </div>
+    <hr />
+    <div>
+        <div class="c rect"></div>
+        <div class="c1 rect"></div>
+    </div>
+    <hr />
+    <div class="c3">
+        <div class="c rect"></div>
+    </div>
+</body>
+<script>
+    var list = select('.c3 .c,.c1');
+
+    // list = select( '.c3' );
+    // list = select( '.c', list );
+    // list = select( '.c1', null, list );
+
+    for (var i = 0; i < list.length; i++) {
+        list[i].style.backgroundColor = 'pink';
+    }
+</script>
+
+</html>

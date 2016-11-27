@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<style type="text/css">
+			.rect {
+				width: 400px;
+				height: 50px;
+				margin: 10px 0;
+			}
+			.c {
+				border: 1px solid red;
+			}
+			.c1 { border: 1px solid green; }
+			.c2 { border: 1px solid blue; }
+		</style>
+		<script type="text/javascript">
+			// get( '选择器', 父元素 )
+
+			// 如果要实现这个功能, 那么应该先做什么?
+			// 1, 首先假定 父元素就是 dom 对象
+			// 首先应该考虑修改查找元素的三个 get 方法, 然后再修改通用的 get 方法
+			
+			// 2, 假定它是一个 dom 数组
+			
+		</script>
+		<script src="common.js"></script>
+	</head>
+	<body>
+		<div class="c3">
+			<div class="c1 rect"></div>
+			<div class="c2 rect"></div>
+			<div class="c rect"></div>
+			<div class="c1 rect"></div>
+		</div>
+		<hr />
+		<div>
+			<div class="c1 rect"></div>
+			<div class="c2 rect"></div>
+			<div class="c rect"></div>
+			<div class="c1 rect"></div>
+		</div>
+	</body>
+	<script type="text/javascript">
+		// get( '.c3' )[ 0 ].style.border = '1px solid red';
+		get( '.c', get( '.c3' )[ 0 ] )[ 0 ]
+			.style.backgroundColor = 'pink';
+		
+	</script>
+</html>
+

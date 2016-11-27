@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+    <style type="text/css">
+        div {
+            width: 400px;
+            height: 50px;
+            margin: 10px 0;
+        }
+        
+        .c {
+            border: 1px solid red;
+        }
+        
+        .c1 {
+            border: 1px solid green;
+        }
+        
+        .c2 {
+            border: 1px solid blue;
+        }
+    </style>
+    <script type="text/javascript" src="./js/03.js">
+    </script>
+</head>
+
+<body>
+    <div class="c1"></div>
+    <div class="c2"></div>
+    <div class="c"></div>
+    <div class="c1"></div>
+</body>
+<script>
+    var list = getClass('c2');
+    // list[ 0 ].style.backgroundColor = 'yellow';
+    for (var k in list) {
+        list[k].style.backgroundColor = 'pink';
+    }
+</script>
+
+</html>

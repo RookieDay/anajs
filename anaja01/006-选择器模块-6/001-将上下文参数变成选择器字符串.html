@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<style type="text/css">
+			.rect {
+				width: 400px;
+				height: 50px;
+				margin: 10px 0;
+			}
+			.c {
+				border: 1px solid red;
+			}
+			.c1 { border: 1px solid green; }
+			.c2 { border: 1px solid blue; }
+		</style>
+		
+		<script src="common.js"></script>
+	</head>
+	<body>
+		<div class="c3">
+			<div class="c1 rect"></div>
+			<div class="c2 rect"></div>
+			<div class="c rect"></div>
+			<div class="c1 rect"></div>
+		</div>
+		<hr />
+		<div>
+			<div class="c rect"></div>
+			<div class="c1 rect"></div>
+		</div>
+		<hr />
+		<div class="c3">
+			<div class="c rect"></div>
+		</div>
+	</body>
+	<script type="text/javascript">
+		// 在页面中找到所有的 .c3 的节点, 然后在 .c3 的后代元素中
+		// 找符合 .c 的节点, 并返回
+		each( get( '.c', '.c3' ), function () { 
+			this.style.backgroundColor = 'pink';
+		} );
+	</script>
+</html>
+

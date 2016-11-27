@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<style type="text/css">
+			.rect {
+				width: 400px;
+				height: 50px;
+				margin: 10px 0;
+			}
+			.c {
+				border: 1px solid red;
+			}
+			.c1 { border: 1px solid green; }
+			.c2 { border: 1px solid blue; }
+		</style>
+		<script src="common.js"></script>
+		<script type="text/javascript">
+			// 找出所有的 .c1 和 .c2 的元素, 加上背景色
+			// get( '.c1, .c2' ) => '.c1' ' .c2'
+			
+			var myTrim = function ( str ) {
+				if ( String.prototype.trim ) {
+					return str.trim();
+				} else {
+					return str.replace( /^\s+|\s+$/g, '' );
+				}
+			};
+			
+			// 比如 selector 就是 '.c1, .c2'
+			var select = function ( selector, context, results ) {
+				results = results || [];
+				// 首先处理逗号
+				var newSelectors = selector.split( ',' );   // => [ '.dv  .c1', ' .c2' ]
+				each( newSelectors, function ( i, v ) {
+					
+					// 需要解析的就是 v 或 this
+					// 分割
+					var list = v.split( ' ' );
+					var c = context;
+					// context -> list[ 0 ] -> list[ 1 ] -> ... -> list[ length - 1 ]
+					for ( var i = 0; i < list.length; i++ ) {
+						if ( list[ i ] === '' ) continue; 
+						c = get( list[ i ], c );
+						// 如果 list[ i ] 是空字符串, 那么只是下 c 下面找空数据, 是不会报错的
+					}
+					
+					
+					results.push.apply( results, c );
+					
+				} );
+				
+				return results;
+			};
+		</script>
+	</head>
+	<body>
+		<div class="c3">
+			<div class="c1 rect">
+				<div class="c" style="border: 1px dashed green;">123</div>
+			</div>
+			<div class="c2 rect"></div>
+			<div class="c rect"></div>
+			<div class="c1 rect"></div>
+		</div>
+		<hr />
+		<div>
+			<div class="c rect"></div>
+			<div class="c1 rect"></div>
+		</div>
+		<hr />
+		<div class="c3">
+			<div class="c rect"></div>
+		</div>
+	</body>
+	<script>
+		var list = select( '.c3 .c' );
+		each( list, function () {
+			this.style.backgroundColor = 'red';
+		});
+	</script>
+</html>
