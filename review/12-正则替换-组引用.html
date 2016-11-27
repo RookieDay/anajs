@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<script type="text/javascript">
+		
+			var s = '今天是 1991-1-2, 天气很好. 明天是 2001-3-4, 天气怎样';
+			
+			// 1/2/1991
+			// 1991年1月2日
+			// 2/1/1991
+			
+			s = s.replace( /(\d+)\-(\d+)\-(\d+)/g, "$1年$2月$3日" );
+			
+			// s = s.replace( /(\d+)\-(\d+)\-(\d+)/g, "$2/$3/$1" );
+			
+			alert( s );
+			
+			// 
+			// var s = '今天是 1991-1-2 1:1:1, 天气很好. 明天是 2001-3-4, 天气怎样';
+		</script>
+	</head>
+	<body>
+	</body>
+</html>

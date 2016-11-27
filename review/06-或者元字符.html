@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<script>
+			
+			// 在正则中有一个运算符 | 表示或者的含义
+			// 注意: 优先级最低
+			
+			var r1 = /a|b/; // 等价于 [ab]
+			var r2 = /abcdefg|hijklmn/;
+			
+			// 案例
+			// 我想查找一个单词, 叫 foo t? d?
+			var r3 = /foo(?:t|d)/;
+			//			   1				   2	
+			var r4 = /^(?:#([a-zA-Z0-9\-_]+)|\.([a-zA-Z0-9\-_]+))$/;
+		</script>
+	</head>
+	<body>
+	</body>
+</html>

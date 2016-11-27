@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<script type="text/javascript">
+			// 
+			// \w	文字		\W			word 文字		默认表示英文和下划线
+			// \d	数字		\D			digit 数字
+			// \s	空白		\S			spcae 空白
+			
+			// 有些开发者使用 [\s\S] 表示增强的 .
+			
+			
+			var get = function ( str ) {
+				
+				// 		      1                   2                 3
+				var r = /^(?:#([\w\-]+)|\.([\w\-]+)|([\w\-]+))$/;
+//				var r = /^(?:#([\w-]+)|\.([\w-]+)|([\w-]+)|(\*)+)$/;
+				var m = r.exec( str );
+				
+				if ( m[ 1 ]  ) {
+					return [ document.getElementById( m[ 1 ] ) ];
+				} else if ( m[ 2 ] ) {
+					return document.getElementsByClassName( m[ 2 ] );
+				} else if ( m[ 3 ] ){
+					return document.getElementsByTagName( m[ 3 ] );
+				}
+				
+			};
+		</script>
+	</head>
+	<body>
+	</body>
+</html>

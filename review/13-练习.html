@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<script type="text/javascript">
+			// alert( new Date );
+		
+		
+			// 
+			// var s = '今天是 1991-1-2 1:1:1, 天气很好. 明天是 2001-3-4 12:13:14, 天气怎样';
+			
+			//       1      2       3     4      5     6
+			// var r = /(\d+)\-(\d+)\-(\d+)\s(\d+):(\d+):(\d+)/g
+			
+			// s = s.replace( r, "$1年$2月$3日 $4时$5分$6秒");
+			
+			
+			
+			// alert( s );
+			
+			
+			// 返回的是字符串
+			// format:
+			// 	yyyy-MM-dd		显示的是 1990-1-1
+			//  yy-MM-dd		显示 90-1-1
+			//  hh:mm:ss		显示 12:11:10
+			//  ...
+			//  yyyy年MM月dd日 hh时mm分ss秒
+			// y	年
+			// M	月
+			// d	日
+			// h	小时
+			// m	分
+			// s	秒
+			var formatdate = function ( date, format ) {
+				// yyyy
+				var y = date.getFullYear();
+				return format.replace( /y{4}/g, y + '' );
+			}; 
+			
+			
+			alert( formatdate( new Date(), '今天是 yyyy年MM月dd日, 天气真好, 到处柳絮飘!' ) );
+		</script>
+	</head>
+	<body>
+	</body>
+</html>

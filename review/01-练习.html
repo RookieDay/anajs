@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8" />
+    <title></title>
+    <style>
+        div {
+            width: 500px;
+            height: 50px;
+            margin: 10px 0;
+            border: 1px dashed red;
+        }
+    </style>
+    <script src="./js/01.js">
+    </script>
+</head>
+
+<body>
+    <div class="c"></div>
+    <div id="dv"></div>
+    <div class="c"></div>
+    <div class="c"></div>
+</body>
+<script>
+    // 1, 
+    // var list = get( 'div' );
+
+    // 2,
+    // var list = get( '.c' );
+
+    // 3,
+    var list = get('.c');
+
+    for (var i = 0; i < list.length; i++) {
+        list[i].style.backgroundColor = 'yellow';
+    }
+
+    // 按照 jq 
+    // get( '#dv' ).css( 'back...color', 'yellow' );
+</script>
+
+</html>

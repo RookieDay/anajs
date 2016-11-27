@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+    <style>
+        div {
+            width: 500px;
+            height: 50px;
+            margin: 10px 0;
+            border: 1px dashed red;
+        }
+    </style>
+    <script src="./js/07.js">
+    </script>
+</head>
+
+<body>
+    <div class="c"></div>
+    <div id="dv"></div>
+    <div class="c"></div>
+    <div class="c"></div>
+</body>
+<script>
+    var list = get('.c');
+    for (var i = 0; i < list.length; i++) {
+        list[i].style.backgroundColor = 'yellow';
+    }
+</script>
+
+</html>
