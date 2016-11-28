@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<script>
+			// 构造函数
+			var itcast = function ( selector ) {
+				return new itcast.fn.init( selector );
+			};
+			// 核心原型
+			itcast.fn = itcast.prototype = {
+				constructor: itcast,
+				init: function ( selector ) {
+					// 字符串: 选择器, html
+					if ( typeof selector == 'string' ) {
+						if ( selector.charAt( 0 ) === '<' ) {
+							this.elements = parseHTML( selector );
+						} else {
+							this.elements = select( selector );
+						}
+					}
+				}
+			};
+			itcast.fn.init.prototype = itcast.prototype;
+			
+			// 可扩展
+			itcast.extend = itcast.fn.extend = function ( obj ) {
+				// 将 obj 的成员加到 this 上
+				var k;
+				for ( k in obj ) {
+					this[ k ] = obj[ k ];
+				}
+			};
+			
+			var select = function ( selector ) {
+				var first = selector.charAt( 0 ), arr = [];
+				if ( first === '#' ) {
+					arr.push.call( arr, document.getElementById( selector.slice( 1 ) ) )
+				} else if ( first === '.' ) {
+					arr.push.apply( arr, document.getElementsByClassName( selector.slice( 1 ) ) )
+				} else {
+					arr.push.apply( arr, document.getElementsByTagName( selector ) );
+				}
+				return arr;
+			};
+			
+			var parseHTML = function ( html ) {
+				var div = document.createElement( 'div' ),
+					arr = [], i;
+				div.innerHTML = html;
+				for ( i = 0; i < div.childNodes.length; i++ ) {
+					arr.push( div.childNodes[ i ] );
+				}
+				return arr;
+			};
+			
+			// 基本的工具方法
+			itcast.extend({
+				each: function ( arr, fn ) {
+					var i, l = arr.length;
+					for ( i = 0; i < l; i++ ) {
+						if ( fn.call( arr[ i ], i, arr[ i ] ) === false ) {
+							break;
+						}
+					}
+				}
+			});
+			
+			// 判断类型的方法
+			itcast.extend({
+				isFunction: function ( obj ) {},
+				isString: function ( obj ) {},
+				isLikeArray: function ( obj ) {},
+			});
+			
+			
+		</script>
+		
+		<script type="text/javascript">
+			onload = function () {
+				var list1 = itcast( '<div></div><p></p><a></a>' );
+				var list2 = itcast( 'body' );
+			
+			}
+		</script>
+	</head>
+	<body>
+	</body>
+</html>

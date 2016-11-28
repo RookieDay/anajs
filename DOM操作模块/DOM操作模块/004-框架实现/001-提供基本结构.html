@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<script>
+			// 构造函数
+			var itcast = function ( selector ) {
+				return new itcast.fn.init( selector );
+			};
+			// 核心原型
+			itcast.fn = itcast.prototype = {
+				constructor: itcast,
+				init: function ( selector ) {
+					
+				}
+			};
+			itcast.fn.init.prototype = itcast.prototype;
+			
+			// 可扩展
+			itcast.extend = itcast.fn.extend = function ( obj ) {
+				
+			};
+		</script>
+	</head>
+	<body>
+	</body>
+</html>
