@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<script type="text/javascript">
+			
+			// obj.elements
+			// 特点就是数据都在 elements 中
+			// 方法与它并列, 也就是说方法与数据分离了
+			
+			// 这样的组织方式管理非常方法
+			// 但是在给予它的开发变得每次都要使用 elements, 很繁琐
+			
+			// jq 中将数据直接存储到 this 中, 也就是说将 jq 对象看成一个伪数组
+			// 里面的每一个元素都是 dom 对象
+			// 同时提供了很多的方法
+			
+			// jq -> DOM
+			// $(...).get(0)
+			// $(...)[ 0 ]
+		</script>
+		<script src="../../js/jquery-1.12.1.js"></script>
+		<script>
+			
+			$(function () {
+				var temp = $( 'div' );
+				var temp = $();
+			});
+		</script>
+	</head>
+	<body>
+		<div class="c1"></div>
+		<div class="c2"></div>
+		<div class="c3"></div>
+	</body>
+</html>

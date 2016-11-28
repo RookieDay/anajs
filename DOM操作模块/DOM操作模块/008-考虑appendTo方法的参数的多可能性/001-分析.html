@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<script src="itcast.js"></script>
+		<script>
+			// appendTo 方法的方法体
+			/*
+	appendTo: function ( selector ) {
+		var objs = itcast( selector ),   // 假定 是字符串
+			i, j,
+			len1 = objs.length,
+			len2 = this.length;
+		// 将 this 加到 objs 中
+		for ( i = 0; i < len1; i++ ) {
+			for ( j = 0; j < len2; j++ ) {
+				objs[ i ].appendChild( i === len1 - 1 ? 
+										this[ j ] :
+										this[ j ].cloneNode( true ) );
+			}
+		}
+	}		*/
+	
+			// 假定参数是选择器, 那么得到的是 itcast 对象( 伪数组 ), 那么
+			// 代码的执行就没有问题.
+			// 如果传入的就是 DOM 数组, DOM 对象, itcast 对象怎么办?
+			// 1> 如果是 DOM 数组
+			//		只要 objs 就是该 DOM 数组就可以使用了
+			// 2> 如果传入的是 DOM 对象
+			//		只需要 objs = [ selector ] 即可
+			// 3> 如果传入的是 itcast 对象?
+			//		与 1> 一样
+			// 4> 如果是字符串如何处理?
+			
+			// 思路就是强化 itcast 构造函数的兼容性
+			
+			
+			
+			onload = function () {
+				var arr = [].concat.apply([], document.getElementsByTagName('div'));
+				
+				I( '<p>p</p>' ).appendTo( arr );
+			};
+		</script>
+	</head>
+	<body>
+		<div></div>
+		<div></div>
+		<div></div>
+	</body>
+</html>
