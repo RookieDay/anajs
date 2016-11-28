@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<script>
+			
+			// var str = "12345";
+			// \d
+			/*
+			var m = /\d/g.exec( str );
+			
+			console.log( m[ 0 ] );
+			
+			m = /\d/g.exec( str );
+			
+			console.log( m[ 0 ] );
+			
+			
+			console.log( {} == {} );
+			*/
+			// 如果要把里面所有的 数字都找出来
+			// var r = /\d/g;
+			
+			
+			// 如果使用 exec 将一个字符串中所有符合要求的内容找出来
+			// 应该如何处理???
+			
+			// 1> 正则对象需要时一个
+			// 2> 全局匹配
+			// 3> 多次 exec 即可
+			
+			
+			
+			// replace
+			var s = '123';
+			
+			var str = s.replace( /\d+/g, 'a' );
+			
+			console.log( str );
+			
+			
+			
+		</script>
+	</head>
+	<body>
+	</body>
+</html>

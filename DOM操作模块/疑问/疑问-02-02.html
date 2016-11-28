@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<!-- 标签 -->
+		<script>
+			// DOM 元素的属性与方法
+			// 1, 为什么使用 DOM?
+			// <div><p><span/></p></div>
+			// node : { children: [ p:{ children:[ span: {} ] } ] }
+			
+			
+			// 2, DOM 将 HTML 页面中所有的元素都看做成一个对象树
+			
+			// 3, 属性
+			// 	nodeType	用来描述 DOM 对象的类型: 1 元素 2 属性 3 文本
+			//  nodeValue	用来获得该 DOM 对象的值: 只用在 文本 标签中
+			//  nodeName	用来获得 DOM 对象的标签名: 值用在元素标签上
+			//				如果是标签, 返回的是全大写的名字字符串
+			
+			// 关系
+			//	子元素关系
+			//	firstChild
+			//  lastChild
+			//  childNodes
+			
+			// 兄弟关系
+			//  nextSibling
+			//  previousSibling
+			
+			// 父元素
+			//  parentNode
+			
+			// 内容属性
+			// innerHTML
+			// innerText
+			
+			
+			// 方法
+			// 增删改查
+			// appendChild
+			// insertBefore
+			// removeChild
+			// innerHTML
+			
+			// 事件
+			// on...
+		</script>
+	</head>
+	<body>
+		<p align="center">你好<span>吗</span>?</p>
+	</body>
+	<script>
+		var p = document.getElementsByTagName( 'p' )[ 0 ];
+		/*
+		// console.log( p.firstChild.nodeValue );
+		console.log( p.nodeType );
+		console.log( p.firstChild.nodeType );
+		
+		var node = p.getAttributeNode( 'align' );  // 属性节点
+		console.log( node );
+		console.log( node.nodeType );
+		console.log( node.nodeValue );
+		
+		p.removeAttributeNode(node);
+		*/
+		
+		// console.log( p.firstChild.nodeName );
+		// console.log( p.childNodes[ 1 ].nodeName.toLocaleLowerCase() );
+		
+		/*
+		console.log( document.body.childNodelengths. );
+		for ( var k in document.body.childNodes ) {
+			console.log( document.body.childNodes[ k ] );
+		}
+		*/
+		
+	</script>
+</html>

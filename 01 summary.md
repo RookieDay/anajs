@@ -299,14 +299,191 @@ return select;
 
 
 
+DOM模块 核心模型
+ // createElement 可以创建 HTML 的 DOM 对象
+
+        // <DOM 对象>.appendTo( ... )
+
+        // 原则: 不要直接的修改原生的内置对象的成员
+
+        // 也就是说 DOM 对象不应该提供 appendTo 方法
+
+        // 谁添加该方法?
+        // -> DOM对象		错误
+        // -> 原型对象		jq 对象的原型对象; 包装对象( 自定义对象 )的原型对象
+        // -> jq 对象
+
+        // $( '...' ).appendTo( $( 'body' ) )
+        // 框架的结构
+        //			var ana = function ( selector ) {
+        //				return new F( selector );
+        //			};
+        //			var F = function ( selector ) {
+        //				
+        //			};
+        //			F.prototype = {
+        //				appendTo: function( selector ) {}
+        //			};
+
+        // 缺点???
+        // 首先在沙箱中 F 对外不可见, 无法实现扩展
+        // 同时在描述中容易造成多个变量暴漏与全局中
+
+        // 解决方案, 直接将 F 绑定到 ana 的上面
+        // -> ana.init = F
+        // -> ana.prototype.init = F
+        // 如果想要扩展
+        // -> ana.init.prototype.xx = xxx;
+
+        // 由于在方法中提供的方法一般是静态方法, 作为工具使用
+        // 但是 jq 中并不是如此操作
+        // 同时根据代码的组织规范, 初始化方法放在原型中更加合理( 与实例相关 )
+
+        var ana = function(selector) {
+            return new ana.prototype.init(selector);
+        };
+        ana.prototype = {
+            appendTo: function(selector) {},
+            init: function(selector) {}
+        };
+
+        ana.prototype.init.prototype = ana.prototype; 
 
 
 
+节点复制：
+// 将问题简化
+			I( '<div></div><div></div>' ).appendTo( 'div' );
+			
+			// 将一个 div 数组( 2 个元素 ) 添加到 页面中的 div 中( 2 个 )
+			// [ d1, d2 ]						[ div1, div2 ]
+			// 将 d1 加到 div1 和 div2 中
+			// 将 d2 加到 div1 和 div2 中
+			
+			// 单个元素要克隆几个由需要添加的元素个数决定, 刚刚是需要添加的个数 - 1
+			
+			// 再简化
+			// 将 dv 加到 [ div1, div2, div3 ] 中
+			/*
+			div1.appendChild( dv.cloneNode( true ) );
+			div2.appendChild( dv.cloneNode( true ) );
+			div3.appendChild( dv );
+			*/
+			
+			// 最后一个不克隆, 前面的所有都要克隆
+			/*
+			for ( var i = 0; i < list.length; i++ ) {
+				list[ i ].appendChild( i === list.length - 1 ?
+										dv : 
+										dv.cloneNode( true ) );
+			}
+			*/
+			
+			
+			
+			// 接下来讨论两个循环
+			// ds = [ d1, d2 ]						list = [ div1, div2, dv3 ]
+			div1.appendChild( d1.cloneNode( true ) );
+			div1.appendChild( d2.cloneNode( true ) );
+			
+			div2.appendChild( d1.cloneNode( true )  );
+			div2.appendChild( d2.cloneNode( true )  );
+			
+			div3.appendChild( d1 );
+			div3.appendChild( d2 );
+			
+			// 添加一层循环
+			for ( var i = 0; i < ds.length; i++ ) {
+				div1.appendChild( ds[ i ].cloneNode( true ) );
+			}
+			for ( var i = 0; i < ds.length; i++ ) {
+				div2.appendChild( ds[ i ].cloneNode( true ) );
+			}
+			for ( var i = 0; i < ds.length; i++ ) {
+				div3.appendChild( ds[ i ] );
+			}
+			// 合并
+			for ( var j = 0; j < list.length; j++ ) {
+				for ( var i = 0; i < ds.length; i++ ) {
+					list[ j ].appendChild( j === list.length - 1 ? 
+												ds[ i ] : 
+												ds[ i ].cloneNode( true ) );
+				}
+			}
 
 
 
+创建子节点的问题：
+// jq 中
+// $( '<div style=""></div>' );
 
+// itcast -> I
+// var dom = I( '<a href="http://www.baidu.com">一个链接</a>' )
 
+var cElem = function(html) {
+    // 1, 在内部创建一个 docfrag
+    var docfrag = document.createDocumentFragment();
+    // 2, 创建真正的 div, 然后设置其 innerHTMl 为出入的字符串
+    // 然后在遍历该子元素, 将内容加入到 docfrag 中
+    var div = document.createElement('div');
+    // 3, 将字符串设置为 它的 innerHTML
+    div.innerHTML = html;
+    // 4, 遍历div的子元素, 加入 docfrag
+    // 在 DOM 元素中默认有一个特征, 即元素只允许有一个 父节点
+    // 如果添加元素到另一个节点中, 该元素会自动的离开原来的父节点
+    while (div.firstChild) {
+        docfrag.appendChild(div.firstChild);
+    }
+    // 5, 获得其子元素返回
+    return docfrag;
+}; 
+以下是理解方式:
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<script type="text/javascript">
+			
+			var id = function ( id ) {
+				return document.getElementById( id );
+			};
+			
+			
+			onload = function () {
+				var d1 = id( 'dv1' );
+				var d2 = id( 'dv2' );
+				var list = d1.getElementsByTagName("p");
+				var len;
+//				for ( var i = 0, len = list.length; i < len; i++ ) {
+//					
+//					d2.appendChild( list[ 0 ] );
+//					
+//				}
+				
+//				while ( list[ 0 ] ) {
+//					d2.appendChild( list[ 0 ] );
+//				}
+				
+				while ( d1.firstChild ) {
+					d2.appendChild( d1.firstChild );
+				}
+			};
+			
+		</script>
+	</head>
+	<body>
+		<div id="dv1">
+			<p>p1</p>
+			<p>p2</p>
+			<p>p3</p>
+			<p>p4</p>
+		</div>
+		<div id="dv2">
+			
+		</div>
+	</body>
+</html>
 
 
 

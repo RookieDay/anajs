@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<style>
+			div, p {
+				width: 400px; height: 50px; margin: 10px 0; padding: 0; border: 1px dashed red;
+			} 
+		</style>
+		<script type="text/javascript">
+			
+			var push = [].push;
+			
+			try {
+		 		var c = document.createElement( 'div' );
+		 		c.appendChild( document.createElement( 'div' ) );
+		 		var list = c.getElementsByTagName( '*' );
+		 		push.apply([], list);
+				
+			} catch(e) {
+				push = {
+					apply: function(target, eles) {
+						var j = target.length,
+							i = 0;
+						while ( target[j++] = eles[i++] );
+						target.length = j-1;
+					}
+				};
+			} finally {
+				c = list = null;
+			}
+			
+		</script>
+	</head>
+	<body>
+		<div>div</div>
+		<div>div</div>
+		<div>div</div>
+		<p>p</p>
+		<p>p</p>
+	</body>
+	<script>
+		var tag = function ( tag, results ) {
+			results = results || [];
+			push.apply( results, document.getElementsByTagName( tag ) );
+			return results;
+		}
+		
+		var list = tag( 'div' );
+		list = tag( 'p', list );
+		
+		for ( var i= 0; i < list.length; i++) {
+			list[ i ].style.backgroundColor = 'yellow';
+		}
+	</script>
+</html>

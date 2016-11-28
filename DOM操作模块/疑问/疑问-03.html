@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+    <script>
+        // jq 
+        // $( '<div></div>' ).appendTo( 'body' );
+
+        // createElement 可以创建 HTML 的 DOM 对象
+
+        // <DOM 对象>.appendTo( ... )
+
+        // 原则: 不要直接的修改原生的内置对象的成员
+
+        // 也就是说 DOM 对象不应该提供 appendTo 方法
+
+        // 谁添加该方法?
+        // -> DOM对象		错误
+        // -> 原型对象		jq 对象的原型对象; 包装对象( 自定义对象 )的原型对象
+        // -> jq 对象
+
+        // $( '...' ).appendTo( $( 'body' ) )
+        // 框架的结构
+        //			var ana = function ( selector ) {
+        //				return new F( selector );
+        //			};
+        //			var F = function ( selector ) {
+        //				
+        //			};
+        //			F.prototype = {
+        //				appendTo: function( selector ) {}
+        //			};
+
+        // 缺点???
+        // 首先在沙箱中 F 对外不可见, 无法实现扩展
+        // 同时在描述中容易造成多个变量暴漏与全局中
+
+        // 解决方案, 直接将 F 绑定到 ana 的上面
+        // -> ana.init = F
+        // -> ana.prototype.init = F
+        // 如果想要扩展
+        // -> ana.init.prototype.xx = xxx;
+
+        // 由于在方法中提供的方法一般是静态方法, 作为工具使用
+        // 但是 jq 中并不是如此操作
+        // 同时根据代码的组织规范, 初始化方法放在原型中更加合理( 与实例相关 )
+
+        var ana = function(selector) {
+            return new ana.prototype.init(selector);
+        };
+        ana.prototype = {
+            appendTo: function(selector) {},
+            init: function(selector) {}
+        };
+
+        ana.prototype.init.prototype = ana.prototype;
+    </script>
+</head>
+
+<body>
+</body>
+
+</html>

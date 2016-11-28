@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+    <script>
+        // ana
+        // ana.prototype
+
+        // 是要给这两个对象添加 extend 方法
+        // 怎么添加
+
+        //			ana.extend = function ( obj ) {
+        //				for ( var k in obj ) {
+        //					this[ k ] = obj[ k ];  
+        //				}
+        //			};
+        //			
+        //			ana.prototype.extend = function ( obj ) {
+        //				for ( var k in obj ) {
+        //					this[ k ] = obj[ k ];  
+        //				}
+        //			};
+
+
+        // console.log( {} == {} );
+        // alert( function () {} == function () {} );
+
+
+        // 优化一下: 减少一个函数, 共享
+        //			var fn = function ( obj ) {
+        //				for ( var k in obj ) {
+        //					this[ k ] = obj[ k ];  
+        //				}
+        //			};
+        //			ana.extend = fn;
+        //			ana.prototype.extend = fn;
+
+        // 浪费一个变量名
+
+        /*
+        var a, b;
+        a = b = 123;
+        */
+
+        // 现将 123 赋值给 b, 然后整个赋值表达式的值就是 123, 接着讲 123 赋值给 a
+        ana.extend = ana.prototype.extend = function(obj) {
+            for (var k in obj) {
+                this[k] = obj[k];
+            }
+        };
+    </script>
+</head>
+
+<body>
+</body>
+
+</html>
