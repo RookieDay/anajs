@@ -9,31 +9,7 @@
 		</style>
 		<script src="select.js"></script>
 		<script src="createElement.js"></script>
-		<script>
-			// 简单的实现以下, selector 可以是 html 字符串, 也可以是 选择器
-		
-			var itcast = function ( selector ) {
-				return new F( selector );
-			};
-			var F = function ( selector ) {  // string, dom, array, func, ...
-				if ( typeof selector === 'string' ) {
-					if ( selector.charAt( 0 ) === '<' ) {
-						// html 字符串
-						this.elements = cElem( selector );
-					} else {
-						// 选择器
-						this.elements = select( selector );
-					}
-				}
-			}
-			F.prototype = {
-				constructor: F,
-				appendTo: function ( abc ) {
-					// 是将 this.elements 加到 selector 上面
-					abc.appendChild( this.elements );
-				}, 
-				after: function () {}
-			}
+		<script src="./js/02.js">
 			
 			
 		</script>
@@ -41,7 +17,7 @@
 	<body>
 	</body>
 	<script>
-		itcast( '<div class="c"></div><div class="c"></div>' ).appendTo( document.body );
+		ana( '<div class="c"></div><div class="c"></div>' ).appendTo( document.body );
 	
 	</script>
 </html>
