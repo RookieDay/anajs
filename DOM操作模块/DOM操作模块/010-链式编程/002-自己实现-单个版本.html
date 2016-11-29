@@ -1,32 +1,37 @@
 <!DOCTYPE html>
 <html>
-	<head>
-		<meta charset="UTF-8">
-		<title></title>
-		<style type="text/css">
-			.c { width: 100px; height: 100px; background-color: yellow; }
-		</style>
-		<script src="itcast.js"></script>
-		<script type="text/javascript">
-			
-			onload = function () {
-				// I( '<div></div>' ).appendTo( 'div' )[ 0 ].className = 'c';
-				
-				// $(...).css().css().css()
-				
-				itcast.each( I( '<div></div>' ).appendTo( 'div' ), function ( i, v ) {
-					this.className = 'c';
-				} );
-				
-				// $(...).appendTo( ... ).each( fn );
-			}
-			
-		</script>
-	</head>
-	<body>
-		<div id="">
-		</div>
-		<div id="">
-		</div>
-	</body>
+
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+    <style type="text/css">
+        .c {
+            width: 100px;
+            height: 100px;
+            background-color: yellow;
+        }
+    </style>
+    <script src="ana.js"></script>
+    <script type="text/javascript">
+        onload = function() {
+            // I( '<div></div>' ).appendTo( 'div' )[ 0 ].className = 'c';
+
+            // $(...).css().css().css()
+
+            ana.each(I('<div></div>').appendTo('div'), function(i, v) {
+                this.className = 'c';
+            });
+
+            // $(...).appendTo( ... ).each( fn );
+        }
+    </script>
+</head>
+
+<body>
+    <div id="">
+    </div>
+    <div id="">
+    </div>
+</body>
+
 </html>

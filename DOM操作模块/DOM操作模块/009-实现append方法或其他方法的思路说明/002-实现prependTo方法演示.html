@@ -1,95 +1,84 @@
 <!DOCTYPE html>
 <html>
-	<head>
-		<meta charset="UTF-8">
-		<title></title>
-		<style>
-			#login {
-				width: 540px;
-				height: 340px;
-				background-color: gray;
-				margin: 80px auto;
-				padding: 30px;
-			}
-		</style>
-		<script src="itcast.js"></script>
-		<script>
-			// 回顾 jq
-			// $( 'body' ).append( '<div></div>' );
-			
-			// 工具方法
-			itcast.extend({
-				firstChild: function ( dom ) {
-					var node, i, l = dom.childNodes.length;
-					
-					for ( i = 0; i < l; i++ ) {
-						node = dom.childNodes[ i ];
-						if ( node.nodeType === 1 ) {
-							return node; 
-						}
-					}
-				}
-				
-			});
-			
-			
-			
-			itcast.fn.extend({
-				append: function ( selector ) {
-					itcast( selector ).appendTo( this );
-				},
-				prepend: function () {},
-				prependTo: function ( selector ) {
-					// this 加到 selector 最前面
-					// 如果将一个 node 加到 body 的最前面怎么做?
-					// 父元素.insertBefore( 新元素, 参考元素 );
-					var objs = itcast( selector ),
-						i, j,
-						len1 = this.length,
-						len2 = objs.length;
-					
-					for ( i = 0; i < len2; i++ ) {
-						for ( j = 0; j < len1; j++ ) {
-							// this[ j ] 加到 objs[ i ] 里面的前面
-							objs[ i ]
-								.insertBefore( i === len2 - 1 ? 
-												this[ j ] :
-												this[ j ].cloneNode( true ),
-											   itcast.firstChild( objs[ i ] ));
-						}
-					}
-					
-				},
-				insertAfter: function () {},
-				after: function () {}
-			});
-			onload = function () {
-				I( '<p>3</p>' ).prependTo( 'div' );
-			};
-		</script>
-	</head>
-	<body>
-		<div>
-			<p>1</p>
-			<p>2</p>
-		</div>
-		<div>
-			<p>1</p>
-			<p>2</p>
-		</div>
-	</body>
+
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+    <style>
+        #login {
+            width: 540px;
+            height: 340px;
+            background-color: gray;
+            margin: 80px auto;
+            padding: 30px;
+        }
+    </style>
+    <script src="ana.js"></script>
+    <script>
+        // 回顾 jq
+        // $( 'body' ).append( '<div></div>' );
+
+        // 工具方法
+        ana.extend({
+            firstChild: function(dom) {
+                var node, i, l = dom.childNodes.length;
+
+                for (i = 0; i < l; i++) {
+                    node = dom.childNodes[i];
+                    if (node.nodeType === 1) {
+                        return node;
+                    }
+                }
+            }
+
+        });
+
+
+
+        ana.fn.extend({
+            append: function(selector) {
+                ana(selector).appendTo(this);
+            },
+            prepend: function() {},
+            prependTo: function(selector) {
+                // this 加到 selector 最前面
+                // 如果将一个 node 加到 body 的最前面怎么做?
+                // 父元素.insertBefore( 新元素, 参考元素 );
+                var objs = ana(selector),
+                    i, j,
+                    len1 = this.length,
+                    len2 = objs.length;
+
+                for (i = 0; i < len2; i++) {
+                    for (j = 0; j < len1; j++) {
+                        // this[ j ] 加到 objs[ i ] 里面的前面
+                        objs[i]
+                            .insertBefore(i === len2 - 1 ?
+                                this[j] :
+                                this[j].cloneNode(true),
+                                ana.firstChild(objs[i]));
+                    }
+                }
+
+            },
+            insertAfter: function() {},
+            after: function() {}
+        });
+        onload = function() {
+            I('<p>3</p>').prependTo('div');
+        };
+    </script>
+</head>
+
+<body>
+    <div>
+        <p>1</p>
+        <p>2</p>
+    </div>
+    <div>
+        <p>1</p>
+        <p>2</p>
+    </div>
+</body>
+
 </html>
-
-
-
-
-
-
-
-
-
-
-
-
-
-

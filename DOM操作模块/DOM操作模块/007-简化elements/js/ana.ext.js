@@ -2,8 +2,8 @@
     var arr = [],
         push = arr.push,
         slice = arr.slice,
-        concat = arr.concat;
-
+        concat = arr.concat,
+        version = 'ana' + 1 * new Date();
     var ana = function(selector) {
         return new ana.fn.init(selector);
     }
@@ -12,7 +12,7 @@
         selector: null,
         length: 0,
         init: function(selector) {
-            if (typeof selector == 'str') {
+            if (typeof selector == 'string') {
                 if (selector.charAt(0) === '<') {
                     ana.push.apply(this, parseHTML(selector));
                 } else {
@@ -23,8 +23,6 @@
         }
     }
     ana.fn.init.prototype = ana.prototype;
-
-    // 可扩展
     ana.extend = ana.fn.extend = function(obj) {
         for (var k in obj) {
             this[k] = obj[k];
@@ -47,8 +45,8 @@
             arr = [],
             i;
         div.innerHTML = html;
-        for (i = 0; i < div.childNodes; i++) {
-            arr.push(div.childNodes);
+        for (i = 0; i < div.childNodes.length; i++) {
+            arr.push(div.childNodes[i]);
         }
         return arr;
     }
@@ -69,9 +67,10 @@
                     }
                 }
             }
+            return arr;
         },
         push: push
-    })
+    });
     ana.extend({
         isFunction: function(obj) {
             return typeof obj === 'function';
@@ -80,19 +79,15 @@
             return typeof obj === 'string';
         },
         isLikeArray: function(obj) {
-            typeof obj && obj.length && obj.length >= 0;
+            return obj && obj.length && obj.length >= 0;
         },
         isAna: function(obj) {
-            return !!obj.selector;
-            // 'slector' in obj 
-            // obj.hasOwnProperty('selector')
-            // return obj.constructor.name === 'ana'
+            return !!obj && obj.version && obj.version.indexOf('ana') === 0;
         },
         isDOM: function(obj) {
             return !!obj.nodeType;
         }
     })
-
     ana.fn.extend({
         appendTo: function(selector) {
             var objs = ana(selector),
@@ -100,14 +95,12 @@
                 len2 = this.length;
             for (i = 0; i < len1; i++) {
                 for (j = 0; j < len2; j++) {
-                    objs[i].appendChild(i === len1 ?
+                    objs[i].appendChild(i === len1 - 1 ?
                         this[j] :
                         this[j].cloneNode(true));
                 }
             }
         }
     })
-
-
     window.I = window.ana = ana;
 })(window);

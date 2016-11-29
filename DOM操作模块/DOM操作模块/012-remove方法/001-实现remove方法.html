@@ -1,37 +1,38 @@
 <!DOCTYPE html>
 <html>
-	<head>
-		<meta charset="UTF-8">
-		<title></title>
-		<script src="itcast.js"></script>
-		<script>
-			
-			// $('...').remove();
-			itcast.fn.extend({
-				
-				remove: function () {
-					// 将 this 删除
-					var arr = [];
-					this.each(function (){
-						arr.push( this.parentNode.removeChild( this ) );
-					});
-					
-					return itcast( arr );
-				}
-				
-			});
-			onload = function (){
-				I( '.c' ).remove().appendTo( '#dv' );
-			};
-			
-		</script>
-	</head>
-	<body>
-		<div class="c">1</div>
-		<div class="c">2</div>
-		
-		<div id="dv">
-			
-		</div>
-	</body>
+
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+    <script src="ana.js"></script>
+    <script>
+        // $('...').remove();
+        ana.fn.extend({
+
+            remove: function() {
+                // 将 this 删除
+                var arr = [];
+                this.each(function() {
+                    arr.push(this.parentNode.removeChild(this));
+                });
+
+                return ana(arr);
+            }
+
+        });
+        onload = function() {
+            I('.c').remove().appendTo('#dv');
+        };
+    </script>
+</head>
+
+<body>
+    <div class="c">1</div>
+    <div class="c">2</div>
+
+    <div id="dv">
+
+    </div>
+</body>
+
 </html>

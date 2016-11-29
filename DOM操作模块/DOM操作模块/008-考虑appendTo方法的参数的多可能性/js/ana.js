@@ -3,7 +3,6 @@
         push = arr.push,
         slice = arr.slice,
         concat = arr.concat;
-
     var ana = function(selector) {
         return new ana.fn.init(selector);
     }
@@ -12,19 +11,33 @@
         selector: null,
         length: 0,
         init: function(selector) {
-            if (typeof selector == 'str') {
+            if (!selector) return this;
+            if (ana.isString(selector)) {
                 if (selector.charAt(0) === '<') {
                     ana.push.apply(this, parseHTML(selector));
                 } else {
                     ana.push.apply(this, select(selector));
+                    this.selector = selector;
                 }
+                return this;
             }
-            this.selector = selector;
+            if (ana.isDOM(selector)) {
+                this[0] = selector;
+                this.length = 1;
+                return this;
+            }
+            if (ana.isAna(selector)) {
+                return selector;
+            }
+            if (ana.isLikeArray(selector)) {
+                ana.push.apply(this, selector);
+                return this;
+            }
         }
     }
+
     ana.fn.init.prototype = ana.prototype;
 
-    // 可扩展
     ana.extend = ana.fn.extend = function(obj) {
         for (var k in obj) {
             this[k] = obj[k];
@@ -32,9 +45,15 @@
     }
     var select = function(selector) {
         var first = selector.charAt(0),
-            arr = [];
+            arr = [],
+            node;
         if (first === '#') {
-            arr.push.call(arr, document.getElementById(selector.slice(1)));
+            node = document.getElementById(selector.slice(1));
+            if (node) {
+                arr.push.call(arr, node);
+            } else {
+                return null;
+            }
         } else if (first === '.') {
             arr.push.apply(arr, document.getElementsByClassName(selector.slice(1)));
         } else {
@@ -47,8 +66,8 @@
             arr = [],
             i;
         div.innerHTML = html;
-        for (i = 0; i < div.childNodes; i++) {
-            arr.push(div.childNodes);
+        for (i = 0; i < div.childNodes.length; i++) {
+            arr.push(div.childNodes[i]);
         }
         return arr;
     }
@@ -69,6 +88,7 @@
                     }
                 }
             }
+            return arr;
         },
         push: push
     })
@@ -79,20 +99,16 @@
         isString: function(obj) {
             return typeof obj === 'string';
         },
-        isLikeArray: function(obj) {
-            typeof obj && obj.length && obj.length >= 0;
-        },
         isAna: function(obj) {
-            return !!obj.selector;
-            // 'slector' in obj 
-            // obj.hasOwnProperty('selector')
-            // return obj.constructor.name === 'ana'
+            return 'selector' in obj;
+        },
+        isLikeArray: function(obj) {
+            return obj && obj.length && obj.length >= 0;
         },
         isDOM: function(obj) {
             return !!obj.nodeType;
         }
     })
-
     ana.fn.extend({
         appendTo: function(selector) {
             var objs = ana(selector),
@@ -102,12 +118,9 @@
                 for (j = 0; j < len2; j++) {
                     objs[i].appendChild(i === len1 ?
                         this[j] :
-                        this[j].cloneNode(true));
+                        this[i].cloneNode(true))
                 }
             }
         }
     })
-
-
-    window.I = window.ana = ana;
 })(window);
