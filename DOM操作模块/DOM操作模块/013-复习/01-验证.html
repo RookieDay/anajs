@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+    <script src="ana.js"></script>
+    <script type="text/javascript">
+        onload = function() {
+
+            I('<p>pppp</p>').prependTo('div');
+
+            I('#dv').next().each(function() {
+                this.style.border = "1px solid red";
+            });
+        };
+    </script>
+</head>
+
+<body>
+    <div id="dv">
+        <p>123</p>
+    </div>
+    <div>
+        <p>123</p>
+    </div>
+</body>
+
+</html>
