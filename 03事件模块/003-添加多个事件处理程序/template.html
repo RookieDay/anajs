@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+    <script src="ana.js"></script>
+    <script src="Sizzle.js"></script>
+    <script type="text/javascript">
+        // onclick ...
+        ana.fn.extend({
+            click: function(fn) {
+                // 要给 每一个 dom 元素添加 事件处理程序 fn
+                this.each(function() {
+                    this.addEventListener('click', fn);
+                });
+                return this;
+            }
+        });
+
+        onload = function() {
+            I('div').click(function() {
+                alert(1);
+            }).click(function() {
+                alert(2);
+            });
+        }
+    </script>
+</head>
+
+<body>
+    <div>123</div>
+</body>
+
+</html>

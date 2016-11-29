@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+    <script src="ana.js"></script>
+    <script src="Sizzle.js"></script>
+    <script type="text/javascript">
+        // jq
+        // jq 对象.on( 事件名, fn )
+
+        // onclick ...
+
+        // ana.fn.extend({
+        //     click: function(fn) {
+        //         // 要给 每一个 dom 元素添加 事件处理程序 fn
+        //         this.each(function() {
+        //             if (this.addEventListener) {
+        //                 this.addEventListener('click', fn);
+        //             } else {
+        //                 this.attachEvent('click', fn);
+        //             }
+        //         });
+        //         return this;
+        //     },
+        //     on: function(type, callback) {
+        //         this.each(function() {
+        //             this.addEventListener(type, callback);
+        //         });
+        //         return this; // 当前对象
+        //     },
+        //     mouseover: function(fn) {
+        //         return this.on('mouseover', fn);
+        //     },
+        //     off: function() {
+        //         this.each(function() {
+        //             this.removeEventListener(type, callback);
+        //         });
+        //         return this;
+        //     }
+        // });
+
+        // onload = function() {
+        //     I('div').click(function() {
+        //         alert(1);
+        //     }).click(function() {
+        //         alert(2);
+        //     });
+        // }
+        ana.fn.extend({
+            click: function(fn) {
+                this.each(function() {
+                    if (this.addEventListener) {
+                        this.addEventListener('click', fn);
+                    } else {
+                        this.attachEvent('click', fn);
+                    }
+                })
+            },
+            on: function(type, callback) {
+                this.each(function() {
+                    this.addEventListener(type, callback);
+                })
+                return this;
+            },
+            mouseover: function(fn) {
+                return this.on("mouseover", fn);
+            },
+            off: function() {
+                this.each(function() {
+                    this.removeEventListener(type, callback);
+                })
+                return this;
+            }
+        })
+        onload = function() {
+            I('div').click(function() {
+                alert(1);
+            }).click(function() {
+                alert(2);
+            })
+        }
+    </script>
+</head>
+
+<body>
+    <div>123</div>
+</body>
+
+</html>

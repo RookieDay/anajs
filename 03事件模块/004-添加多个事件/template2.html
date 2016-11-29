@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+    <script src="ana.js"></script>
+    <script src="Sizzle.js"></script>
+    <script type="text/javascript">
+        // jq
+        // jq 对象.on( 事件名, fn )
+
+        // onclick ...
+
+        ana.fn.extend({
+            on: function(type, callback) {
+                // ana.each( this, function () { ... } )
+
+                this.each(function() {
+                    if (this.addEventListener) {
+                        this.addEventListener(type, callback);
+                    } else {
+                        this.attachEvent('on' + type, callback);
+                    }
+                });
+                return this; // 当前对象
+            },
+            off: function() {
+                this.each(function() {
+                    this.removeEventListener(type, callback);
+                });
+                return this;
+            }
+        });
+
+        // 其他事件
+        // click, mouseover, mousemove, mousedown, mouseup, keydown, keyup
+        ana.each(("click,mouseover," +
+            "mousemove,mousedown," +
+            "mouseup,keydown,keyup").split(','), function(i, v) {
+
+            ana.fn[v] = function(callback) {
+                return this.on(v, callback);
+            }
+
+        });
+
+
+        //			var list = [ 'click', 'mousemove' ]; 
+        //			for ( var i = 0; i < list.length; i++ ) {
+        //				ana.fn[ list[ i ] ] = function ( fn ) {
+        //					return this.on( list[ i ], fn );
+        //				}
+        //			}
+
+
+
+        onload = function() {
+            //				I( 'div' ).mousemove(function () {
+            //					console.log( this );
+            //				})
+
+            I(document).mousemove(function(e) {
+                document.title = e.clientX + ', ' + e.clientY;
+            })
+        }
+    </script>
+</head>
+
+<body>
+    <div>123</div>
+</body>
+
+</html>

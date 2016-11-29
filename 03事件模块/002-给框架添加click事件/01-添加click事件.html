@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+    <script src="ana.js"></script>
+    <script>
+        // jq
+        // $( 'div' ).click( fn ).click( fn2 )
+
+        // ana.fn.extend({
+        //     click: function(fn) {
+        //         // 要给 每一个 dom 元素添加 事件处理程序 fn
+        //         this.each(function() {
+        //             this.onclick = fn;
+        //         });
+        //     }
+        // });
+
+        // onload = function() {
+        //     I('div').click(function() {
+        //         alert(this.innerHTML);
+        //     })
+        // };
+        ana.fn.extend({
+            click: function(fn) {
+                this.each(function() {
+                    this.onclick = fn;
+                })
+            }
+        })
+        onload = function() {
+            I('div').click(function() {
+                alert(this.innerHTML);
+            })
+        }
+
+        // 原生事件
+        //   onload = function() {
+        //     var link = document.getElementById('link');
+        //     link.onclick = function() {
+        //         return false;
+        //     };
+        // }
+    </script>
+</head>
+
+<body>
+    <div id="">123</div>
+    <div>456</div>
+    <div>789</div>
+</body>
+
+</html>

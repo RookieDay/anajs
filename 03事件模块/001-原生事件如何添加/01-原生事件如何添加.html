@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+    <script>
+        // 事件有哪些? 如何添加
+        // onclick
+        // onmouseover
+        // onmousedown
+        // onmouseenter
+        // onmouseout
+        // onfocus
+        // onblur
+        // on...
+
+        // 如何添加事件?
+        //
+        /*
+        div.onclick = function () {
+        	
+        };*/
+
+        // 人触发一个行为, 节点标签注册了一个事件处理程序
+        // 节点会调用事件处理程序
+
+        // 事件
+
+        // 名字
+
+        /*
+        click() {
+        	if onclick != null {
+        		if (onclick() !== false) {
+        			默认行为
+        		}
+        	}
+        }
+        */
+
+
+        // addEventLisener
+        // 	dom.addEventLisener( 事件名, fn )
+        //	
+        // attachEvent
+        //  dom.attachEvent( 事件名, fn )
+
+
+        onload = function() {
+            var link = document.getElementById('link');
+            link.onclick = function() {
+                return false;
+            };
+        }
+    </script>
+</head>
+
+<body>
+    <a href="http://www.baidu.com" id="link">12</a>
+</body>
+
+</html>
