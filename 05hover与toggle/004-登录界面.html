@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+    <style>
+        #login {
+            border: 1px solid red;
+            width: 300px;
+            height: 200px;
+            margin: 100px auto;
+            display: none;
+        }
+    </style>
+    <script src="ana.js"></script>
+    <script type="text/javascript">
+        onload = function() {
+            I('#btn').toggle(function() {
+                I('#login').each(function() {
+                    this.style.display = 'block';
+                })
+            }, function() {
+                I('#login').each(function() {
+                    this.style.display = 'none';
+                })
+            });
+        };
+    </script>
+</head>
+
+<body>
+    <input type="button" value="登录" id="btn" />
+    <br />
+    <div id="login">
+        <input type="text" /><br />
+        <input type="password" /><br />
+        <input type="button" value="登录" />
+    </div>
+</body>
+
+</html>

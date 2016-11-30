@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<script>
+			
+			function fn() {
+				console.log( this );
+			}
+			
+			// fn();
+			var o = { name: 'jim' };
+			o.fn = fn;
+			
+			// o.fn();
+			
+			// arr
+			var arr = [ fn ];
+			arr[ 0 ]();
+			
+			
+		</script>
+	</head>
+	<body>
+	</body>
+</html>

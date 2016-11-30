@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+    <style type="text/css">
+        #dv {
+            width: 400px;
+            height: 200px;
+            border: 1px dashed red;
+        }
+        
+        .c {
+            background-color: blue;
+        }
+    </style>
+    <script src="ana.js"></script>
+    <script>
+        ana.fn.extend({
+            hover: function(fn1, fn2) {
+                return this.mouseover(fn1).mouseout(fn2);
+            }
+        });
+        // ana.fn.extend({
+        //     hover: function(fn1, fn2) {
+        //         return this.moverover(fn1).mouseout(fn2);
+        //     }
+        // })
+
+        onload = function() {
+
+            I('#dv').hover(function() {
+                    this.className = 'c';
+                }
+                /*, function () {
+                					this.className = '';
+                				}*/
+            );
+
+        }
+    </script>
+</head>
+
+<body>
+    <div id="dv"></div>
+</body>
+
+</html>

@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+    <style type="text/css">
+        #dv {
+            width: 400px;
+            height: 200px;
+            border: 1px dashed red;
+        }
+        
+        .c {
+            background-color: blue;
+        }
+    </style>
+    <script src="ana.js"></script>
+    <script>
+        // toggle
+        // I( 'div' ).toggle( f1, f2, f3, ..., fN );
+        ana.fn.extend({
+            toggle: function() {
+                var args = arguments,
+                    i = 0;
+
+                // 调用的时候, 绑定一个方法, 同时在执行的时候要
+                // 移除第一个方法, 加载第二个方法 ...
+
+                return this.click(function(e) {
+                    // args[ i++ % args.length ]();
+                    args[i++ % args.length].call(this, e);
+                    // args[ i++ % args.length ]( e );
+                });
+
+                // 1, 如何实现 点一次调用一次
+                // 2, 如果实现 在传入的函数中获得事件对象 e
+                // 3, 如何在传入函数中 让 this 表示当前对象
+            }
+        });
+        // ana.fn.extend({
+        //     toggle: function() {
+        //         var args = arguments,
+        //             i = 0;
+        //         return this.click(function(e) {
+        //             args[i++ % args.length].call(this, e);
+        //         })
+        //     }
+        // })
+
+        onload = function() {
+            I('#dv').toggle(function(e) {
+                alert('第一次 ' + e + ', ' + this /*.innerHTML*/ );
+            }, function(e) {
+                alert('第二次 ' + e.type + ', ' + this /*.innerHTML*/ );
+            }, function(e) {
+                alert('第三次 ' + e.which + ', ' + this /*.innerHTML*/ );
+            });
+        };
+    </script>
+</head>
+
+<body>
+    <div id="dv">123</div>
+</body>
+
+</html>

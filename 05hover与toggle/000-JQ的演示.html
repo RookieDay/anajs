@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<style type="text/css">
+			#dv {
+				width: 100px;
+				height: 30px;
+				border: 1px dashed red;
+			}
+			.c {
+				background-color: red;
+			}
+			</style>
+		<script src="../js/jquery-1.12.1.js"></script>
+		<script type="text/javascript">
+			$(function () {
+				
+				$('#dv').hover( function () {
+					this.className = 'c';
+				}, function () {
+					this.className = '';
+				} )
+				
+			})
+		</script>
+	</head>
+	<body>
+		<div id="dv"></div>
+	</body>
+</html>
