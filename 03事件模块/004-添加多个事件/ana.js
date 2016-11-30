@@ -328,10 +328,11 @@
         off: function() {
             this.each(function() {
                 this.removeEventListener(type, callback);
-            })
+            });
             return this;
         }
     })
+
     ana.each(("click,mouseover," +
         "mousemove,mousedown," +
         "mouseup,keydown,keyup").split(','), function(i, v) {
