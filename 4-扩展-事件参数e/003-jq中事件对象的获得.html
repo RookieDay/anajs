@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<style type="text/css">
+			#dv {
+				width: 100px;
+				height: 30px;
+				border: 1px dashed red;
+			}
+		</style>
+		<script src="../js/jquery-1.12.1.js"></script>
+		<script>
+			onload = function () {
+				$( '#dv' ).mousedown( function ( e ) {
+					// alert( e.button );
+					alert( e.which );
+				});
+			}
+			
+			
+			// 每一个浏览器事件 e
+			// 获得鼠标的按键
+			// IE: button
+			//	左键 1	右键 2	中键 4
+			// which 不存在
+			
+			// 谷歌: button
+			//  左键 0	右键	2	中键 1
+			// which
+			//	左键 1	右键 3	中键 2
+			
+			
+			// 如果要兼容 IE
+			// 需要给 which 赋值
+			// 如果是 IE, button = 1 赋值 1, = 2 赋值 3, = 4 赋值 2
+			
+		</script>
+	</head>
+	<body>
+		<div id="dv"></div>
+	</body>
+</html>

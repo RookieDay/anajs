@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+    <style type="text/css">
+        #dv {
+            width: 100px;
+            height: 30px;
+            border: 1px dashed red;
+        }
+    </style>
+    <script src="ana.js"></script>
+    <script src="Sizzle.js"></script>
+
+    <script type="text/javascript">
+        onload = function() {
+            I('#dv').mousedown(function(e) {
+                // 内部就是 div.onclick = fn
+                // e = e || window.event;
+
+                // type 获得事件的类型
+                // button 属性
+                // alert( e.type );
+                // alert( e.button );
+                alert(e.which);
+            });
+
+        };
+    </script>
+</head>
+
+<body>
+    <div id="dv"></div>
+</body>
+
+</html>
