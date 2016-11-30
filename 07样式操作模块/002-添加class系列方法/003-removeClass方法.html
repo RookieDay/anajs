@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+    <script src="ana.js"></script>
+    <script>
+        ana.fn.extend({
+            hasClass: function(cName) { // cName 可能会是 'c1 c2 c3'
+                // 判断 this[ 0 ] 是否具有该类样式
+                var has = false;
+                ana.each(this[0].className.split(' '), function(i, v) {
+
+                    if (v === cName) {
+                        has = true;
+                        return false;
+                    }
+
+                });
+                return has;
+            },
+            addClass: function(cName) {
+                // 给 this 中的每一个元素 追加一个类样式
+                return this.each(function() {
+
+                    var className = this.className;
+                    className += ' ' + cName;
+                    this.className = ana.trim(className);
+                });
+            },
+            removeClass: function(cName) {
+                // 将 this 中每一个 DOM 对象的 className 属性中符合 cName 的删除掉
+                return this.each(function() {
+                    // this.className
+                    // 1> 将其生成数组, 使用 splice 方法移除符合要求的项
+                    /*
+                    var arr = this.className.split( ' ' ),
+                    	i, 
+                    	l = arr.length;
+                    for ( i = 0; i < l; i++ ) {
+                    	if ( arr[ i ] === cName ) {
+                    		break;
+                    	}
+                    }
+                    arr.splice( i, 1 ); // i 可能超出索引范围, 一旦超出, 可以不做处理
+                    // delete arr[ i ];
+                    this.className = arr.join( ' ' );
+                    */
+
+                    // 2> 直接 replace
+                    // 加入 dom: 'c c1 c2'->' c c1 c2 '
+                    // 移除: 'c' -> ' c '
+                    var className = ' ' + this.className + ' ';
+                    this.className = ana.trim(className.replace(' ' + cName + ' ', ' '));
+                });
+            }
+        });
+
+        I(function() {
+            I('div').removeClass('c');
+        });
+    </script>
+</head>
+
+<body>
+    <div class="c c1 c2 c3 c4-name"></div>
+    <div></div>
+</body>
+
+</html>

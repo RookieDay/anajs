@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<script>
+			
+			// 得到元素以后
+			// 构造数组???
+			// push.apply( this, 结果 )
+			
+			var o = { length: 0 };
+			
+			onload = function () {
+				// id
+				// var id = document.getElementById( 'dv' );
+				// 如果返回空 不应该加入数组
+				// [].push.apply( o, [ id ] );
+				// [].push.call( o, id );
+				
+				// 考虑 id 的时候, 如果没有这个元素, 那么 select 函数返回是
+				// [ null ]
+				// 在 init 函数, 将得到的结果加到 this 上
+				// 因此 this 就变成了一个长度为 1 元素却为空的伪数组
+				
+				// this 原本是一个 DOM 对象的伪数组, 也就是说里面应该存储
+				// 的是 DOM, 如果没有数据, 那么 length 因为 0, 里面没有数据
+				// 但是现在有了非法数据
+				
+				// var node = document.getElementsByClassName( 'c' );
+				
+			};
+			
+		</script>
+	</head>
+	<body>
+	</body>
+</html>
+
+
+
+
+

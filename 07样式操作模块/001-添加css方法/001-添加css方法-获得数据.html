@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+    <style>
+        div {
+            width: 100px;
+            height: 20px;
+            border: 1px solid red;
+            margin: 10px 0;
+        }
+        
+        .c1 {
+            background-color: red;
+            /* #ff0000 */
+        }
+        
+        .c2 {
+            background-color: green;
+            /* #00ff00 */
+        }
+        
+        .c3 {
+            background-color: blue;
+            /* #0000ff */
+        }
+    </style>
+    <script src="ana.js"></script>
+    <script>
+        ana.fn.extend({
+            css: function(cssName, cssValue) {
+                // 假设只有一个参数 cssName
+                // this 是多个元素是一个 DOM 的数组, 但是获取数据的时候
+                // 获得的是第 0 个元素的样式
+                // return this[ 0 ].style[ cssName ];
+
+                // 在 js 中, 利用 js 获得样式, 默认只能获得行内样式, 类样式与外部样式无法获得
+                // 考虑使用 计算样式来获得第一次的结果
+                // window.getComputedStyle
+                // 如果是 低版本的 IE 浏览器, 需要使用 currentStyle
+
+                var style = window.getComputedStyle(this[0]);
+
+                return style[cssName];
+            }
+        });
+
+        I(function() {
+            var res = I('div').css('background-color');
+            console.log(typeof res);
+        });
+    </script>
+</head>
+
+<body>
+    <div class="c1"></div>
+    <div class="c2"></div>
+    <div class="c3"></div>
+</body>
+
+</html>

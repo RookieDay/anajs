@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+    <style>
+        .c {
+            background-color: #000;
+        }
+    </style>
+    <script src="ana.js"></script>
+    <script>
+        ana.fn.extend({
+            hasClass: function(cName) { // cName 可能会是 'c1 c2 c3'
+                // 判断 this[ 0 ] 是否具有该类样式
+                var has = false;
+                ana.each(this[0].className.split(' '), function(i, v) {
+
+                    if (v === cName) {
+                        has = true;
+                        return false;
+                    }
+
+                });
+                return has;
+            },
+            addClass: function(cName) {
+                // 给 this 中的每一个元素 追加一个类样式
+                return this.each(function() {
+
+                    var className = this.className;
+                    className += ' ' + cName;
+                    this.className = ana.trim(className);
+                });
+            },
+            removeClass: function(cName) {
+                // 将 this 中每一个 DOM 对象的 className 属性中符合 cName 的删除掉
+                return this.each(function() {
+                    this.className = ana.trim(
+                        (' ' + this.className + ' ')
+                        .replace(' ' + cName + ' ', ' '));
+                });
+            },
+            toggleClass: function(cName) {
+                if (this.hasClass(cName)) {
+                    this.removeClass(cName);
+                } else {
+                    this.addClass(cName);
+                }
+            }
+        });
+
+
+        I(function() {
+
+            I('#btn').click(function() {
+                I('body').toggleClass('c');
+            });
+
+        });
+    </script>
+</head>
+
+<body>
+    <input type="button" id="btn" value=" click " />
+</body>
+
+</html>

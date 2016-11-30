@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<script src="ana.js"></script>
+		<script>
+			ana.fn.extend({
+				hasClass: function ( cName ) {  // cName 可能会是 'c1 c2 c3'
+					// 判断 this[ 0 ] 是否具有该类样式
+					var has = false;
+					ana.each(this[ 0 ].className.split( ' ' ), function ( i, v ) {
+						
+						// console.log( this );	// 包装对象
+						// console.log( v );		// 字符串
+						
+						if ( v === cName ) {
+							has = true;
+							return false;
+						}
+					});
+					return has;
+					
+					// return ( ' ' + this[ 0 ].className + ' ' ).indexOf(
+					// 			' ' + trim( cName ) + ' ' ) != -1;
+					
+					
+					
+					// /\bc1\b|\bc2\b|\bc3\b/
+					// c4-name
+					// i have a dream
+					// new RegExp("\\b" + cName.replace(' ', "\\b|\\b") + "\\b", 'g').test( this[ 0 ].className )
+				}
+			});
+			
+			I( function () {
+				var c = I( 'div' ).hasClass( 'c3' );
+				alert( c );
+			} );
+		</script>
+	</head>
+	<body>
+		<div class="c c1 c2 c3 c4-name"></div>
+	</body>
+</html>

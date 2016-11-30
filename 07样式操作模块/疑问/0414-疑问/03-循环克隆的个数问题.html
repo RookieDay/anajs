@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<script>
+			// 将问题简化
+			I( '<div></div><div></div>' ).appendTo( 'div' );
+			
+			// 将一个 div 数组( 2 个元素 ) 添加到 页面中的 div 中( 2 个 )
+			// [ d1, d2 ]						[ div1, div2 ]
+			// 将 d1 加到 div1 和 div2 中
+			// 将 d2 加到 div1 和 div2 中
+			
+			// 单个元素要克隆几个由需要添加的元素个数决定, 刚刚是需要添加的个数 - 1
+			
+			// 再简化
+			// 将 dv 加到 [ div1, div2, div3 ] 中
+			/*
+			div1.appendChild( dv.cloneNode( true ) );
+			div2.appendChild( dv.cloneNode( true ) );
+			div3.appendChild( dv );
+			*/
+			
+			// 最后一个不克隆, 前面的所有都要克隆
+			/*
+			for ( var i = 0; i < list.length; i++ ) {
+				list[ i ].appendChild( i === list.length - 1 ?
+										dv : 
+										dv.cloneNode( true ) );
+			}
+			*/
+			
+			
+			
+			// 接下来讨论两个循环
+			// ds = [ d1, d2 ]						list = [ div1, div2, dv3 ]
+			div1.appendChild( d1.cloneNode( true ) );
+			div1.appendChild( d2.cloneNode( true ) );
+			
+			div2.appendChild( d1.cloneNode( true )  );
+			div2.appendChild( d2.cloneNode( true )  );
+			
+			div3.appendChild( d1 );
+			div3.appendChild( d2 );
+			
+			// 添加一层循环
+			for ( var i = 0; i < ds.length; i++ ) {
+				div1.appendChild( ds[ i ].cloneNode( true ) );
+			}
+			for ( var i = 0; i < ds.length; i++ ) {
+				div2.appendChild( ds[ i ].cloneNode( true ) );
+			}
+			for ( var i = 0; i < ds.length; i++ ) {
+				div3.appendChild( ds[ i ] );
+			}
+			// 合并
+			for ( var j = 0; j < list.length; j++ ) {
+				for ( var i = 0; i < ds.length; i++ ) {
+					list[ j ].appendChild( j === list.length - 1 ? 
+												ds[ i ] : 
+												ds[ i ].cloneNode( true ) );
+				}
+			}
+			
+		</script>
+	</head>
+	<body>
+	</body>
+</html>

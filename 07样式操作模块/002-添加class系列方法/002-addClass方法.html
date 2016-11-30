@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+    <script src="ana.js"></script>
+    <script>
+        ana.fn.extend({
+            hasClass: function(cName) { // cName 可能会是 'c1 c2 c3'
+                // 判断 this[ 0 ] 是否具有该类样式
+                var has = false;
+                ana.each(this[0].className.split(' '), function(i, v) {
+
+                    if (v === cName) {
+                        has = true;
+                        return false;
+                    }
+
+                });
+                return has;
+            },
+            addClass: function(cName) {
+                // 给 this 中的每一个元素 追加一个类样式
+                return this.each(function() {
+                    /*
+                    if ( this.className ) {
+                    	this.className += ' ' + cName;
+                    } else {
+                    	this.className = cName;
+                    }
+                    */
+
+
+                    // 在处理 CSS 类样式的时候, 实际上就是累加数据
+                    // 但是如果要处理移除左右空格, 以及将中间多余空格去掉
+                    // 可能有多次赋值
+                    // this.className += cName;
+                    // this.className = ana.trim( this.className );
+                    // 如果操作的元素是直接在页面中的, 那么不建议每次都直接
+                    // 操作页面中的元素, 而是采用临时变量. 先对临时变量做操作
+                    // 最后一次加到界面中的元素中
+                    var className = this.className;
+                    className += ' ' + cName;
+                    this.className = ana.trim(className);
+                });
+            }
+        });
+
+        I(function() {
+            I('div').addClass('   ');
+        });
+    </script>
+</head>
+
+<body>
+    <div class="c c1 c2 c3 c4-name"></div>
+    <div></div>
+</body>
+
+</html>

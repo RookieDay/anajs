@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<script>
+			// var i = 123;
+			// i.test = 456;
+			// console.log( i.test );
+			// console.log( i.toString() );
+			
+			/*
+			console.log( typeof 123 );
+			console.log( typeof new Number(123) );
+			
+			console.log( 123 );
+			console.log( new Number(123) );
+			*/
+			
+			
+			
+			
+		</script>
+	</head>
+	<body>
+		1, 一开始我们写了一个
+			getId( 'id' )
+			getTag( 'tag' )
+			getClass( 'class' )
+		2, 在操作 dom 元素的时候, 可能需要获得多个元素, 做一个相同的操作
+			getId( 'id', results )
+			getTag( 'tag', results )
+			getClass( 'class', results )
+		3, 循环使用的非常频繁
+			为了减少重复的的代码, 也为了避免遍历使用的变量 i 的局部特性
+			each( 数组, function ( k, v ) {    } );
+			
+			fn.call( arr[ i ], i, arr[ i ] );
+			
+			如果使用 call 和 apply 调用, 第一个参数一定要是对象 或 null
+			如果参数是基本类型( number, boolean, string ), 那么会
+			自动的转换为其包装类型( Number, Boolean, String )
+		
+		4, 封装 get 函数
+			get( 'selector', results )
+		
+		5, 要求在上下文中完成筛选
+			select( 'selector', context, results )
+		
+		6, 为了解决浏览器的兼容
+			移除左右空格 myTrim
+			IE 低版本的 myPush
+			能力检测( 2 种 )
+	</body>
+</html>

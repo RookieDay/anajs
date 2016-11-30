@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+    <script type="text/javascript">
+        var ana = function(selector) {
+            return new ana.prototype.init(selector);
+        };
+        ana.prototype = {
+            appendTo: function(selector) {},
+            init: function(selector) {}
+        };
+
+        ana.prototype.init.prototype = ana.prototype;
+
+
+        ana.extend = ana.prototype.extend = function(obj) {};
+
+        // 前面给大家描述过, 代码在逻辑上组织时候是需要按照特定功能分组的
+
+        // 工具型方法
+        // 例如要实现 nextSibling
+        // jq 中就是 next()
+        //	.next()					获得下一个元素
+        //  .next( selector )		获得下一个元素,如果该元素是符合说选择器的取出来, 否则没有获得到元素
+
+        // 如果要实现该方法
+        // 实际上就是内部循环调用 获得下一个元素的方法
+        // 就是一个 dom 数组, 获得每一个元素的下一个元素, 组成一个新数组
+        // [ div1, div2 ]
+        // [ div1.nextSibling, div2.nextSibling ]
+
+        // 由于浏览器的不同, 该方法可能会获得空的文本节点, 这个不应该在元素上考虑
+        // 需要一个通用的工具方法, 来获得某一个元素的下一个元素
+        //			var next = function ( dom ) {
+        //				var newDom = dom;
+        //				while( newDom = newDom.nextSibling ) {
+        //					if ( newDom.nodeType == 1 ) {
+        //						return newDom;
+        //					}
+        //				}
+        //			};
+        //			[ next( divs ), next( div2 ) ];
+        //			
+
+        // 实际上该方法如果放到沙箱中, 外部是无法访问, 也就是说必须只能在沙箱内部使用
+        // 而该方法如果在框架扩展的时候是需要使用该功能的, 那么就出现无法共享的问题
+        // 因此为了共享应该将其作为静态方法存在
+        // 那么在代码中如何添加该方法呢?
+
+        // -> ana.next = function () ...
+        // -> ana.extend({ next: function() {} });
+
+        // 实例方法
+        // -> ana.prototype.next = function () {}
+        // -> ana.prototype.extend({ next: function() {} });
+
+
+
+        // 将来在添加方法的时候
+
+        // 1>
+        ana.prototype.css = function() {};
+        ana.prototype.hasClass = function() {};
+        ana.prototype.addClass = function() {};
+        ana.prototype.removeClass = function() {};
+        ana.prototype.toggleClass = function() {};
+
+
+        // 2>
+        ana.prototype.extend({
+            css: function() {},
+            hasClass: function() {},
+            addClass: function() {},
+            removeClass: function() {},
+            toggleClass: function() {}
+        });
+
+
+        // 工具型方法
+    </script>
+</head>
+
+<body>
+</body>
+
+</html>

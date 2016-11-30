@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+    <style>
+        div {
+            width: 100px;
+            height: 20px;
+            border: 1px solid red;
+            margin: 10px 0;
+        }
+        
+        .c1 {
+            background-color: red;
+            /* #ff0000 */
+        }
+        
+        .c2 {
+            background-color: green;
+            /* #00ff00 */
+        }
+        
+        .c3 {
+            background-color: blue;
+            /* #0000ff */
+        }
+    </style>
+    <script src="ana.js"></script>
+    <script>
+        ana.fn.extend({
+            css: function(cssName, cssValue) {
+
+                if (cssValue === undefined) {
+
+                    return window.getComputedStyle(this[0])[cssName];
+
+                } else { // 两个参数
+
+                    // 给所有的元素都添加 该样式
+                    return this.each(function() {
+                        this.style[cssName] = cssValue;
+                    });
+                }
+            }
+        });
+
+        I(function() {
+            // var res = I( 'div' ).css( 'background-color' );
+            // console.log(typeof res );
+
+            I('div').css('backgroundColor', '#000');
+        });
+    </script>
+</head>
+
+<body>
+    <div class="c1"></div>
+    <div class="c2"></div>
+    <div class="c3"></div>
+</body>
+
+</html>

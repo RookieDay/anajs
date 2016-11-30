@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<script>
+			
+			// push
+			// push.apply 的形式进行调用
+			// 功能 push.apply( 伪数组1, 伪数组2 );
+			var push = {
+				//			   [ 1, 2 ]  [ 3, 4, 5]
+				apply: function ( arr1, arr2 ) {
+					// 将 arr2 里面的每一个元素都一个个加到 arr1 中
+					
+					// 如果 arr1 是真数组
+					/*
+					for ( var i = 0; i < arr2.length; i++ ) {
+						arr1.push( arr2[ i ] );
+						arr1[ arr1.length++ ] = arr2[ i ];
+					}
+					*/
+					
+					var l = arr1.length;
+					for ( var i = 0; i < arr2.length; i++ ) {
+						arr1[ l + i ] = arr2[ i ];
+					}
+					// 如果 arr1 是真数组, 没有问题, 如果是伪数组, 那么 length
+					// 不会自动增加, 所以, 需要手动的赋值
+					arr1.length = l + i;
+					
+					
+					// jq 中使用的是 while
+					var l = arr1.length;
+					var i = 0;
+					while( arr1[ l++ ] = arr2[ i++ ] ) ;
+					arr1.length = l - 1;
+				}
+			};
+			
+			
+		</script>
+	</head>
+	<body>
+	</body>
+</html>
