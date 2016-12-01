@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<style type="text/css">
+			.c {
+				width: 80%;
+				height: 20px;
+				line-height: 20px;
+				margin: 10px 0;
+			}
+		</style>
+		<script src="ana.js"></script>
+		<script type="text/javascript">
+			
+			ana.fn.extend({
+				attr: function ( attName, attValue ) {
+					if ( arguments.length == 1 ) {
+						// img.src			HTML-DOM
+						// link.href
+						// setAttribute		DOM-Core
+						// getAttribute
+						
+						return this[ 0 ][ attName ];
+					} else {
+						// 给每一个 dom 都添加/设置该属性值
+						return this.each(function () {
+							this[ attName ] = attValue;
+						});
+					}
+				},
+				val: function ( value ) {
+					if ( value === undefined ) {
+						// 返回
+						return this[ 0 ].value;
+					} else {
+						// 设置
+						return this.each(function () {
+							this.value = value;
+						});
+					}
+				}
+				
+			});
+			
+			
+			I(function () {
+				I('#btn').click(function (){
+					I( '#txt' ).val( '哈哈哈, 好简单' );
+				});
+				
+				
+				I('#input').keyup(function () {
+					// 将 this 中的 value 赋值给 output
+					
+					I( '#output' ).val( I( this ).val() );
+					
+				});
+			});
+		</script>
+	</head>
+	<body class='c'>
+		<input type="text" id="txt" />
+		<input type="button" value="获得图片路径" id="btn" /><br />
+		
+		<input type="text" id="input" class="c" /><br />
+		<input type="text" id="output" class="c" />
+	</body>
+</html>

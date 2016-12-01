@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<script>
+			var getInnerText = function ( dom ) {
+				// if ( dom.innerText !== undefined ) {
+				//	return dom.innerText;
+				// } else {
+					// 怎么处理???
+					// 1> 获得 innerHTML, 移除所有标签
+					var html = dom.innerHTML + '';
+					html = html.replace( /<\/?[a-zA-Z][^>]*\/?>/g, '' );
+					// 修改 &lt; 和 &gt;
+					html = html.replace( /&lt;/g, '<' ).replace( /&gt;/g, '>' );
+					// 移除 注释 <!-- -->
+					// html = html.replace( /<!--[^>]*-->/g, '');
+					return html;
+					// 2> 递归获得所有文本节点
+				// }
+			};
+		
+			onload = function () {
+				var dv = document.getElementById( 'dv' );
+				
+				// var res = dv.innerText;
+				var res = getInnerText( dv );
+				console.log(res);
+			};
+			
+		</script>
+	</head>
+	<body>
+		<div id="dv">
+			<br />
+			<p>1>2<3<span>4<5></5>6</span>783333<abc>3</abc>3333333339</p>
+		</div>
+	</body>
+</html>

@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<script src="ana.js"></script>
+		<script>
+			// 传统的 dom 操作如何选中
+			/*
+			onload = function () {
+				var t = document.getElementsByTagName('input')[ 0 ];
+				// t.checked = 'checked'; // true
+				t.checked = false;
+			};
+			*/
+			
+			
+			I(function () {
+				// 全选
+				I('#btn1').click(function () {
+					I('.c').attr('checked', true);
+					// attr 中使用的是 setAttribute( ... )
+					// 在 HTML 语言中只要有 checked 属性, 就是选中
+					// removeAttributeNode
+					
+				});
+				// 全不选
+				I('#btn2').click(function () {
+					I('.c').attr('checked', false);
+				});
+				// 反选
+				I( '#btn3' ).click(function () {
+					I('.c').each(function () {
+						this.checked = !this.checked;
+						// I(this).attr( 'checked', !I(this).attr('checked'));
+					});
+				});
+			});
+			
+		</script>
+	</head>
+	<body>
+		<input type="checkbox" class="c"/>测试数据<br />
+		<input type="checkbox" class="c"/>测试数据<br />
+		<input type="checkbox" class="c"/>测试数据<br />
+		<input type="checkbox" class="c"/>测试数据<br />
+		<input type="checkbox" class="c"/>测试数据<br />
+		<input type="checkbox" class="c"/>测试数据<br />
+		<input type="checkbox" class="c"/>测试数据<br />
+		<hr />
+		<input type="button" value="全选" id="btn1"/>
+		<input type="button" value="全取消" id="btn2"/>
+		<input type="button" value="反选" id="btn3"/>
+	</body>
+</html>

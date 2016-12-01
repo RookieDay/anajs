@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<script src="ana.js"></script>
+		<script type="text/javascript">
+			ana.extend({
+				
+				getInnerText: function ( dom ) {
+					var list = [];
+					if ( dom.innerText !== undefined ) {
+						return dom.innerText;
+					} else {
+						getTextNode( dom, list );
+						return list.join( '' );
+					}
+					
+					function getTextNode ( dom, arr ) {
+						// 将 dom 里面的所有的文本节点放到 arr 中
+						var i, l = dom.childNodes.length,
+							node;
+						for ( i = 0; i < l; i++ ) {
+							node = dom.childNodes[ i ];
+							if ( node.nodeType === 3 ) {
+								arr.push( node.nodeValue );
+							} else {
+								getTextNode( node, arr );
+							}
+						}
+					}
+				},
+				setInnerText: function ( dom, str ) {
+					if ( 'innerText' in dom ) {
+						dom.innerText = str;
+					} else {
+						dom.innerHTML = "";
+							
+						dom.appendChild( document.createTextNode( str ) );
+					}
+				}
+			});
+			
+			ana.fn.extend({
+				html: function ( html ) {
+					if ( html === undefined ) {
+						// 返回 0 元素的 innerHTML
+						return this[ 0 ].innerHTML;
+					} else {
+						// 设置所有的 innerHTML
+						return this.each(function () {
+							this.innerHTML = html;
+						});
+					}
+				},
+				text: function ( text ) {
+					// 与 html 类似, 如果带有参数, 给每一个 DOM 对象
+					// 设置 innerText 属性. 如果没有参数, 则返回 第 0 
+					// 个对象的 innerText 值
+					if ( text === undefined ) {
+						// 返回 0 元素的 innerHTML
+						return ana.getInnerText( this[ 0 ] );
+					} else {
+						// 设置所有的 innerHTML
+						return this.each(function () {
+							// 注意: 依旧需要判断如果支持 innerText 怎么处理
+							// 不支持又怎么处理
+							// this.innerHTML = "";
+							// this.appendChild( document.createTextNode( text ) );
+							
+							ana.setInnerText( this, text );
+							
+						});
+					}
+				}
+			});
+			
+			I(function () {
+				// console.log( I('#dv').text() );
+				
+				I('#dv').text('<span style="color: red">span</span>');
+			});
+		</script>
+	</head>
+	<body>
+		<div id="dv">
+			<p>1>2<3<span>4<5></5>6</span>789</p>
+		</div>
+	</body>
+</html>

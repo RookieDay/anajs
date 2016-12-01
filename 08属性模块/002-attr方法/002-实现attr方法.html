@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+    <script src="ana.js"></script>
+    <script type="text/javascript">
+        ana.fn.extend({
+            attr: function(attName, attValue) {
+                if (arguments.length == 1) {
+                    // img.src			HTML-DOM
+                    // link.href
+                    // setAttribute		DOM-Core
+                    // getAttribute
+
+                    return this[0][attName];
+                } else {
+                    // 给每一个 dom 都添加/设置该属性值
+                    return this.each(function() {
+                        this[attName] = attValue;
+                    });
+                }
+            }
+
+
+        });
+
+
+        I(function() {
+            I('#btn').click(function() {
+                // alert( I('a').attr('href') );
+
+                I('img').attr('src', '1.png');
+            });
+        });
+    </script>
+</head>
+
+<body class='c'>
+    <a href="http://www.ana.cn">摆渡</a><br />
+    <img src="../001-属性模块概述/2016-04-17_151342.png" alt="" /><br />
+    <img src="../001-属性模块概述/2016-04-17_151342.png" alt="" /><br />
+    <img src="../001-属性模块概述/2016-04-17_151342.png" alt="" /><br />
+    <img src="../001-属性模块概述/2016-04-17_151342.png" alt="" /><br />
+    <img src="../001-属性模块概述/2016-04-17_151342.png" alt="" /><br />
+    <input type="button" value="获得图片路径" id="btn" />
+</body>
+
+</html>

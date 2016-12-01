@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+    <script src="ana.js"></script>
+    <script>
+        ana.fn.extend({
+            html: function(html) {
+                if (html === undefined) {
+                    // 返回 0 元素的 innerHTML
+                    return this[0].innerHTML;
+                } else {
+                    // 设置所有的 innerHTML
+                    return this.each(function() {
+                        this.innerHTML = html;
+                    });
+                }
+            }
+        });
+
+
+        I(function() {
+            // alert( I('div').html() );
+            I('div').html('<span style="color: red;">span</span>');
+        });
+    </script>
+</head>
+
+<body>
+    <div>1231</div>
+    <div>1232</div>
+    <div>1233</div>
+    <div>1234</div>
+    <div>1235</div>
+</body>
+
+</html>
