@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<style type="text/css">
+			#box {
+				width: 100px;
+				height: 100px;
+				border: 1px solid red;
+				position: absolute;
+				left: 0px;
+				top: 0px;
+			}
+			
+			#btn {
+				margin-top: 200px;
+			}
+		</style>
+		<script src="../itcast.js"></script>
+		<script>
+		
+			var easting1 = function ( t, total, d ) { .... }	// 匀速
+			var easting2 = function ( t, total, d ) { .... } // 减速
+			// 函数的功能
+			// 根据 时间 time 计算出 移动的距离
+		
+		
+			// isTrue 是 true 就是匀速
+			// isTrue 是 false 就是匀减速
+			var animate = function ( dom, target, dur, isTrue ) {
+				
+				var totalDistance = target - dom.offsetLeft,  // 总路程 = 目标路程 - 当前位置
+					startTime = +new Date,
+					startLocation = dom.offsetLeft,
+					timerId,
+					stepTime = 25,
+					
+					play = function () {
+						var time = +new Date - startTime, // 已过时间毫秒
+							tween;
+						// 就是在计算 速度 * 已过时间
+						if ( time >= dur ) {
+							tween = totalDistance;
+							clearInterval( timerId );
+						} else {
+							
+							if ( isTrue === undefined || isTrue == true ) {
+								// 匀速
+								tween = time * ( totalDistance / dur );
+								console.log( totalDistance / dur );  // 瞬时速度
+							} else {
+								// 匀减速
+								// 需要添加 加速度, 初始速度
+								var a = 2 * totalDistance / ( dur * dur ),
+									v_0 = a * dur;
+								tween = v_0 * time - a * time * time / 2;
+								console.log( v_0 - a * time );  // 瞬时速度
+							}
+						
+						}
+						
+						dom.style.left = startLocation + tween + 'px';					
+					};
+				play();
+				timerId = setInterval( play, stepTime );  // 50Hz
+			};
+		
+			
+			I(function () {
+				I('#btn').click(function () {
+					var domDiv = I('#box')[0];
+					
+					animate( domDiv, 400, 1000, false );
+				});
+			});
+			
+		</script>
+	</head>
+	<body>
+		<div id="box"></div>
+		<input type="button" value="动画 animation" id="btn" />
+	</body>
+</html>

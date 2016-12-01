@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<style type="text/css">
+			#box {
+				width: 100px;
+				height: 100px;
+				border: 1px solid red;
+				position: absolute;
+				left: 0px;
+				top: 0px;
+			}
+			
+			#btn {
+				margin-top: 200px;
+			}
+		</style>
+		<script src="../itcast.js"></script>
+		<script>
+		
+			
+			
+		
+			// 做渐渐停下的运动
+			// 一开始让 step 很大, 最后变为 0 即可
+			var animate = function ( dom, target ) {
+				// 定义一个计时器, 然后每隔一段时间执行修改 dom 对象的 left
+				var play = function () {
+					var step = Math.ceil( ( target - dom.offsetLeft ) / 8 );
+					// 修改 dom 的 left 样式的值, 直到 值等于 target 为止
+					var oldLeft = dom.offsetLeft; // 得到原来的位置
+					
+					// 累加, 但是如果加后 大于等于 target 则直接设置为 target
+					if ( oldLeft + step >= target ) {
+						oldLeft = target;
+						// 停止计时器
+						clearInterval( timer );
+						timer = 0;
+					} else {
+						oldLeft += step;
+					}
+					
+					// 设置回样式
+					dom.style.left = oldLeft + 'px';					
+				};
+				
+				play();
+				
+				var timer = setInterval( play, 25 );  // 50Hz
+			};
+		
+			
+			I(function () {
+				I('#btn').click(function () {
+					var domDiv = I('#box')[0];
+					
+					// domDiv.style.left = '400px';  
+					// 这个操作需要动画来完成
+					animate( domDiv, 800 );
+				});
+			});
+			
+		</script>
+	</head>
+	<body>
+		<div id="box"></div>
+		<input type="button" value="动画 animation" id="btn" />
+	</body>
+</html>

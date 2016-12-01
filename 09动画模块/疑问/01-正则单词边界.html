@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<script>
+			
+			// 利用正则表达式是用来匹配数据的. 匹配字符串
+			// 但是有些时候, 查找的东西可能比较复杂
+			// 比如需要查询一个方法, 叫 a
+			
+			// append
+			// appendTo
+			// add
+			// attach
+			// addEvent...
+			// ...
+			
+			// 因此需要规范, 我现在需要的是 a 的边界( 英文 )
+			// 使用 \b 表示一个单词的边界, 比如: I have a dream
+			
+			var s = "I have a dream";
+			var r = /\b\w\b/g;
+			var m = r.exec( s );
+			
+			m = r.exec( s );
+			
+			m = r.exec( s );
+			
+		</script>
+	</head>
+	<body>
+	</body>
+</html>

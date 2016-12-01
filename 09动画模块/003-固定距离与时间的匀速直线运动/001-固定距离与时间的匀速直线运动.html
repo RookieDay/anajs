@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<style type="text/css">
+			#box {
+				width: 100px;
+				height: 100px;
+				border: 1px solid red;
+				position: absolute;
+				left: 0px;
+				top: 0px;
+			}
+			
+			#btn {
+				margin-top: 200px;
+			}
+		</style>
+		<script src="../itcast.js"></script>
+		<script>
+		
+			// 有两种思考方式
+			// 1> 计算出速度
+			// 2> 使用 时间 与 路程 的 比值
+		
+			// 我们现在需要根据当前已经经过的时间 计算出 应该所在的位置
+			// 固定时间与距离
+			// duration 总时间
+			var animate = function ( dom, target, dur ) {
+				var totalDistance = target - dom.offsetLeft;  // 总路程 = 目标路程 - 当前位置
+				var startTime = +new Date;
+				var startLocation = dom.offsetLeft;
+				// console.log( startTime );
+				var play = function () {
+					// 在 每次 play 的时候计算一下已经经过了多少时间
+					var currentTime = +new Date;
+					// console.log( currentTime );
+					var time = currentTime - startTime; // 毫秒
+					// 已经经过的时间 / 总时间 = 已经经过的路程(tween) / 总路程
+					// console.log( time );
+					// 由于精度问题, 除法放在后面
+					// console.log( totalDistance );
+					var tween = time * totalDistance / dur;
+					// 5 * 100 / 5000
+					// console.log( dur );
+					console.log( tween );
+					// 停下来的规则
+					// 1> 时间到了
+					// 2> 路程到了
+					
+					if ( time >= dur ) {
+						tween = totalDistance;
+						clearInterval( timerId );
+					}
+					
+					// 距离进程
+					// between
+					dom.style.left = startLocation + tween + 'px';					
+				};
+				
+				play();
+				
+				var timerId = setInterval( play, 25 );  // 50Hz
+			};
+		
+			
+			I(function () {
+				I('#btn').click(function () {
+					var domDiv = I('#box')[0];
+					
+					// domDiv.style.left = '400px';  
+					// 这个操作需要动画来完成
+					animate( domDiv, 800, 5000 );
+				});
+			});
+			
+		</script>
+	</head>
+	<body>
+		<div id="box"></div>
+		<input type="button" value="动画 animation" id="btn" />
+	</body>
+</html>

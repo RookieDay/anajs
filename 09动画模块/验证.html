@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<style type="text/css">
+			#box {
+				width: 100px;
+				height: 100px;
+				border: 1px solid red;
+				position: absolute;
+				left: 0px;
+				top: 0px;
+			}
+			
+			#btn1, #btn2 {
+				margin-top: 200px;
+			}
+		</style>
+		<script src="itcast.js"></script>
+		
+		<script>
+			I(function () {
+				var i = I( '#box' );
+				I( '#btn1' ).click( function () {
+					i.animate( {
+						left: '400px'
+					}, 5000, 'minusspeed' );
+				});
+				
+				I( '#btn2' ).click( function () {
+					i.stopAnimating();
+				});
+				
+			})
+			
+		</script>
+	</head>
+	<body>
+		<div id="box"></div>
+		<input type="button" value="动画 animation" id="btn1" />
+		<input type="button" value="停止动画 animation" id="btn2" />
+	</body>
+</html>

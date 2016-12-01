@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<style type="text/css">
+			#box {
+				width: 100px;
+				height: 100px;
+				border: 1px solid red;
+				position: absolute;
+				left: 0px;
+				top: 0px;
+			}
+			
+			#btn {
+				margin-top: 200px;
+			}
+		</style>
+		<script src="../itcast.js"></script>
+		<script>
+		
+			// 初始速度:	v_0
+			// 加速度:	a
+			// 瞬时速度:  v_t = v_0 + a * time 
+			// 走过的路程: S = v_0 * time + 1/2 * a * time^2
+			
+			// 一些推倒
+			// 1> 加速度是多少?
+			//		结论: 最后停下来了, 表明 v_t = 0
+			//		S = target 时候停下了
+			//		计算 初始速度为 0 的时候, 在加速度 a 的时候 经过 time 时间 走到 target 的位置
+			//		target = 1 / 2 * a * dur^2;
+			//		a = 2 * target / ( dur * dur )
+			
+			
+
+			// 2> 初始速度是多少?
+			//		结论: 最后停下了
+			//		可以看做 初始值为 0, 在 加速度 a, 和 时间 dur 后, 速度是多少?
+			//		v_0 = a * dur
+			
+			
+			
+			// 3> 如何计算?
+			// 		依旧采用: 原始位置 + tween + 'px'
+			//		wteen 的计算就是获得 在初始速度 v_0, 经过时间 time 后, 在加速度 a 下走过了多少距离
+			//		tween = v_0 * time + a * time * time / 2;
+			
+			
+			var animate = function ( dom, target, dur ) {
+				var totalDistance = target - dom.offsetLeft,  // 总路程 = 目标路程 - 当前位置
+					startTime = +new Date,
+					startLocation = dom.offsetLeft,
+					timerId,
+					stepTime = 25,
+					// 需要添加 加速度, 初始速度
+					a = 2 * totalDistance / ( dur * dur ),
+					v_0 = a * dur,
+					play = function () {
+						var time = +new Date - startTime, // 已过时间毫秒
+							tween;
+						// 就是在计算 速度 * 已过时间
+						if ( time >= dur ) {
+							tween = totalDistance;
+							clearInterval( timerId );
+						} else {
+							
+							
+							tween = v_0 * time - a * time * time / 2;
+						
+						
+						}
+						console.log( v_0 - a * time );  // 瞬时速度
+						dom.style.left = startLocation + tween + 'px';					
+					};
+				play();
+				timerId = setInterval( play, stepTime );  // 50Hz
+			};
+		
+			
+			I(function () {
+				I('#btn').click(function () {
+					var domDiv = I('#box')[0];
+					
+					animate( domDiv, 400, 1000 );
+				});
+			});
+			
+		</script>
+	</head>
+	<body>
+		<div id="box"></div>
+		<input type="button" value="动画 animation" id="btn" />
+	</body>
+</html>
