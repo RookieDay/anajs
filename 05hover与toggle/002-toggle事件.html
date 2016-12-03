@@ -30,6 +30,7 @@
                 return this.click(function(e) {
                     // args[ i++ % args.length ]();
                     args[i++ % args.length].call(this, e);
+                    // 函数调用模式 this指向window 所以这里需要call
                     // args[ i++ % args.length ]( e );
                 });
 
