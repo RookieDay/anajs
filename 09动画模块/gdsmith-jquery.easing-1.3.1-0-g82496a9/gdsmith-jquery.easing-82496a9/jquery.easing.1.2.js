@@ -1,44 +1,18 @@
-<!DOCTYPE html>
-<html>
-	<head>
-		<meta charset="UTF-8">
-		<title></title>
-		<style type="text/css">
-			#box {
-				width: 100px;
-				height: 100px;
-				border: 1px solid red;
-				position: absolute;
-				left: 0px;
-				top: 0px;
-			}
-			
-			#btn {
-				margin-top: 200px;
-			}
-		</style>
-		<script src="../ana.js"></script>
-		<script>
-		
-			var easing1 = function ( x, t, b, c, d ) { 
-				console.log( '匀速' );
-				return t * ( c - b ) / d;
-			}	// 匀速
-			var easing2 = function ( x, t, b, c, d ) {
-				console.log( '变速' );
-				// 需要初始速度 和加速度
-				var a = 2 * ( c - b ) / ( d * d ),
-					v_0 = a * d;
-				return v_0 * t - a * t * t / 2;
-			} // 减速
-			// 函数的功能
-			// 根据 时间 time 计算出 移动的距离
-		
-			var easing = {
-	liner: function ( x, t, b, c, d ) { 
-		// console.log( '匀速' );
-		return t * ( c - b ) / d;
-	},
+/*
+ * jQuery EasIng v1.2 - http://gsgd.co.uk/sandbox/jquery.easIng.php
+ *
+ * Uses the built In easIng capabilities added In jQuery 1.1
+ * to offer multiple easIng options
+ *
+ * Copyright (c) 2007 George Smith
+ * Licensed under the MIT License:
+ *   http://www.opensource.org/licenses/mit-license.php
+ */
+
+// t: current time, b: begInnIng value, c: change In value, d: duration
+
+jQuery.extend( jQuery.easing,
+{
 	easeInQuad: function (x, t, b, c, d) {
 		return c*(t/=d)*t + b;
 	},
@@ -145,7 +119,9 @@
 		if ((t/=d/2) < 1) return c/2*(t*t*(((s*=(1.525))+1)*t - s)) + b;
 		return c/2*((t-=2)*t*(((s*=(1.525))+1)*t + s) + 2) + b;
 	},
-
+	easeInBounce: function (x, t, b, c, d) {
+		return c - jQuery.easing.easeOutBounce (x, d-t, 0, c, d) + b;
+	},
 	easeOutBounce: function (x, t, b, c, d) {
 		if ((t/=d) < (1/2.75)) {
 			return c*(7.5625*t*t) + b;
@@ -156,54 +132,9 @@
 		} else {
 			return c*(7.5625*(t-=(2.625/2.75))*t + .984375) + b;
 		}
+	},
+	easeInOutBounce: function (x, t, b, c, d) {
+		if (t < d/2) return jQuery.easing.easeInBounce (x, t*2, 0, c, d) * .5 + b;
+		return jQuery.easing.easeOutBounce (x, t*2-d, 0, c, d) * .5 + c*.5 + b;
 	}
-				
-				
-			};
-			
-		
-			// isTrue 是 true 就是匀速
-			// isTrue 是 false 就是匀减速
-			var animate = function ( dom, target, dur, easingName ) {
-				var totalDistance = target - dom.offsetLeft,  // 总路程 = 目标路程 - 当前位置
-					startTime = +new Date,
-					startLocation = dom.offsetLeft,
-					timerId,
-					stepTime = 25,
-					
-					play = function () {
-						var time = +new Date - startTime, // 已过时间毫秒
-							tween;
-						// 就是在计算 速度 * 已过时间
-						if ( time >= dur ) {
-							tween = totalDistance;
-							clearInterval( timerId );
-						} else {
-							tween = easing[ easingName ]( null, time, startLocation, target, dur );
-						}
-						dom.style.left = startLocation + tween + 'px';					
-					};
-				play();
-				timerId = setInterval( play, stepTime );  // 50Hz
-			};
-		
-			
-			I(function () {
-				I('#btn').click(function () {
-					var domDiv = I('#box')[0];
-					// juqery-ui effective
-					animate( domDiv, 400, 5000, 'easeOutCubic' );
-					
-					animate( domDiv, {
-						left: '400px'
-					}, 5000, 'liner' );
-				});
-			});
-			
-		</script>
-	</head>
-	<body>
-		<div id="box"></div>
-		<input type="button" value="动画 animation" id="btn" />
-	</body>
-</html>
+});

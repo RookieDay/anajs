@@ -1,4 +1,4 @@
-// by itcast
+// by ana
 // xxxx-xx-xx
 
 (function ( window, undefined ) {
@@ -10,12 +10,12 @@ var arr = [],
 	concat = arr.concat;
 	
 // 构造函数
-var itcast = function itcast ( selector ) {
-	return new itcast.fn.init( selector );
+var ana = function ana ( selector ) {
+	return new ana.fn.init( selector );
 };
 // 核心原型
-itcast.fn = itcast.prototype = {
-	constructor: itcast,
+ana.fn = ana.prototype = {
+	constructor: ana,
 	selector: null,
 	length: 0,
 	// 假定 init 的参数
@@ -24,45 +24,45 @@ itcast.fn = itcast.prototype = {
 	// 3> string -> over
 	// 4> DOM 数组
 	// 5> DOM 对象
-	// 6> itcast 对象
+	// 6> ana 对象
 	init: function ( selector ) {
 		
 		if ( !selector ) return this;
 		
 		// 字符串: 选择器, html
-		if ( itcast.isString( selector ) ) {
+		if ( ana.isString( selector ) ) {
 			if ( selector.charAt( 0 ) === '<' ) {
 				// this.elements = parseHTML( selector );
-				itcast.push.apply( this, itcast.parseHTML( selector ) );
+				ana.push.apply( this, ana.parseHTML( selector ) );
 			} else {
 				// this.elements = select( selector );
-				itcast.push.apply( this, itcast.select( selector ) );
+				ana.push.apply( this, ana.select( selector ) );
 				this.selector = selector;
 			}
 			return this;
 		}
 		
 		// DOM 对象
-		if ( itcast.isDOM( selector ) ) {
+		if ( ana.isDOM( selector ) ) {
 			this[ 0 ] = selector;
 			this.length = 1;
 			return this;
 		}
 		
-		// itcast 对象
-		if ( itcast.isItcast( selector ) ) {
+		// ana 对象
+		if ( ana.isana( selector ) ) {
 			return selector;
 		}
 		
 		// DOM 数组
-		if ( itcast.isLikeArray( selector ) ) {
-			itcast.push.apply( this, selector );
+		if ( ana.isLikeArray( selector ) ) {
+			ana.push.apply( this, selector );
 			
 			return this;
 		}
 		
 		
-		if ( itcast.isFunction( selector ) ) {
+		if ( ana.isFunction( selector ) ) {
 			// window.onload = selector;
 			var oldFn = window.onload;
 			if ( typeof oldFn === 'function' ) {
@@ -79,14 +79,14 @@ itcast.fn = itcast.prototype = {
 		}
 	},
 	each: function ( callback ) {
-		itcast.each( this, callback );
+		ana.each( this, callback );
 		return this;
 	}
 };
-itcast.fn.init.prototype = itcast.prototype;
+ana.fn.init.prototype = ana.prototype;
 
 // 可扩展
-itcast.extend = itcast.fn.extend = function ( obj ) {
+ana.extend = ana.fn.extend = function ( obj ) {
 	// 将 obj 的成员加到 this 上
 	var k;
 	for ( k in obj ) {
@@ -123,16 +123,16 @@ var parseHTML = function ( html ) {
 };
 
 
-itcast.extend({
+ana.extend({
 	select: select,
 	parseHTML: parseHTML
 });
 
 // 基本的工具方法
-itcast.extend({
+ana.extend({
 	each: function ( arr, fn ) {
 		var i, l = arr.length, 
-			isArray = itcast.isLikeArray( arr );
+			isArray = ana.isLikeArray( arr );
 		if ( isArray ) {
 			// 数组
 			for ( i = 0; i < l; i++ ) {
@@ -157,7 +157,7 @@ itcast.extend({
 });
 
 // 判断类型的方法
-itcast.extend({
+ana.extend({
 	isFunction: function ( obj ) {
 		return typeof obj === 'function';
 	},
@@ -167,11 +167,11 @@ itcast.extend({
 	isLikeArray: function ( obj ) {
 		return obj && obj.length && obj.length >= 0;
 	},
-	isItcast: function ( obj ) {
+	isana: function ( obj ) {
 		return 'selector' in obj;
 		// 'selector' in obj
 		// obj.hasOwnProperty( 'selector' )
-		// return obj.constructor.name === 'itcast';
+		// return obj.constructor.name === 'ana';
 	},
 	isDOM: function ( obj ) {
 		return !!obj.nodeType;
@@ -181,7 +181,7 @@ itcast.extend({
 
 // 基本的 DOM 操作
 // 工具方法
-itcast.extend({
+ana.extend({
 	firstChild: function ( dom ) {
 		/*var i, node, len = dom.childNodes.length;
 		for ( i = 0; i < len; i++ ) {
@@ -193,7 +193,7 @@ itcast.extend({
 		
 		
 		var node;
-		itcast.each(dom.childNodes, function ( i, v ) {
+		ana.each(dom.childNodes, function ( i, v ) {
 			// 遍历子元素
 			if ( this.nodeType === 1 ) {
 				node = this;
@@ -222,9 +222,9 @@ itcast.extend({
  	}
 });
 // 实例方法
-itcast.fn.extend({
+ana.fn.extend({
 	appendTo: function ( selector ) {
-		var objs = itcast( selector ),
+		var objs = ana( selector ),
 			i, j,
 			len1 = objs.length,
 			len2 = this.length,
@@ -239,15 +239,15 @@ itcast.fn.extend({
 				objs[ i ].appendChild( node );
 			}
 		}
-		return itcast( arr );
+		return ana( arr );
 	},
 	append: function ( selector ) {
-		itcast( selector ).appendTo( this );
+		ana( selector ).appendTo( this );
 		return this;
 	}, 
 	prependTo: function ( selector ) {
 		// 谁加到谁上
-		var objs = itcast( selector ),
+		var objs = ana( selector ),
 			len1 = this.length,
 			len2 = objs.length, 
 			i, j;
@@ -257,7 +257,7 @@ itcast.fn.extend({
 				objs[ i ].insertBefore( i === len2 - 1 ?
 										 	this[ j ] :
 											this[ j ].cloneNode( true ),
-										itcast.firstChild( objs[ i ] ) );
+										ana.firstChild( objs[ i ] ) );
 			}
 		}
 		
@@ -265,7 +265,7 @@ itcast.fn.extend({
 	},
 	prepend: function ( selector ) {
 		// selector 加到 this 上
-		itcast( selector ).prependTo( this );
+		ana( selector ).prependTo( this );
 		return this;
 	},
 	remove: function () {
@@ -280,25 +280,25 @@ itcast.fn.extend({
 	next: function () {
 		// 找到 this 的下一个元素
 		var arr = [];
-		itcast.each( this, function ( i, v ) {
-			arr.push( itcast.nextSibling( v ) ); // bug
+		ana.each( this, function ( i, v ) {
+			arr.push( ana.nextSibling( v ) ); // bug
 		});
-		return itcast( arr );
+		return ana( arr );
 	},
 	nextAll: function () {
 		var arr = [];
-		itcast.each( this, function ( i, v ) {
-			itcast.push.apply( arr, itcast.nextAll( v ) ); // bug
+		ana.each( this, function ( i, v ) {
+			ana.push.apply( arr, ana.nextAll( v ) ); // bug
 		});
-		return itcast( arr );
+		return ana( arr );
 	}
 });
 
 
 // 事件模块
-itcast.fn.extend({
+ana.fn.extend({
 	on: function ( type, callback ) {
-		// itcast.each( this, function () { ... } )
+		// ana.each( this, function () { ... } )
 		
 		this.each( function () {
 			if ( this.addEventListener ) {
@@ -319,11 +319,11 @@ itcast.fn.extend({
 
 // 其他事件
 // click, mouseover, mousemove, mousedown, mouseup, keydown, keyup
-itcast.each( ("click,mouseover,mouseout,mouseenter,mouseleave," + 
+ana.each( ("click,mouseover,mouseout,mouseenter,mouseleave," + 
 			  "mousemove,mousedown," + 
 			  "mouseup,keydown,keyup" ).split(','), function ( i, v ) {
 			  	
-	itcast.fn[ v ] = function ( callback ) {
+	ana.fn[ v ] = function ( callback ) {
 		return this.on( v, callback );
 	}
   	
@@ -331,7 +331,7 @@ itcast.each( ("click,mouseover,mouseout,mouseenter,mouseleave," +
 
 
 // toggle 与 hover
-itcast.fn.extend({
+ana.fn.extend({
 	hover: function ( fn1, fn2 ) {
 		return this.mouseover( fn1 ).mouseout( fn2 );
 	},
@@ -351,7 +351,7 @@ itcast.fn.extend({
 
 
 // CSS 模块
-itcast.fn.extend({
+ana.fn.extend({
 	css: function ( cssName, cssValue ) {
 		if ( typeof cssName == 'object' ) {
 			// 给 this 中每一个 dom 对象都添加 样式
@@ -377,7 +377,7 @@ itcast.fn.extend({
 	hasClass: function ( cName ) {  // cName 可能会是 'c1 c2 c3'
 		// 判断 this[ 0 ] 是否具有该类样式
 		var has = false;
-		itcast.each(this[ 0 ].className.split( ' ' ), function ( i, v ) {
+		ana.each(this[ 0 ].className.split( ' ' ), function ( i, v ) {
 			
 			if ( v === cName ) {
 				has = true;
@@ -393,13 +393,13 @@ itcast.fn.extend({
 			
 			var className = this.className;
 			className += ' ' + cName;
-			this.className = itcast.trim( className );
+			this.className = ana.trim( className );
 		});
 	},
 	removeClass: function ( cName ) {
 		// 将 this 中每一个 DOM 对象的 className 属性中符合 cName 的删除掉
 		return this.each( function () {
-			this.className = itcast.trim( 
+			this.className = ana.trim( 
 							( ' ' + this.className + ' ' )
 								.replace( ' ' + cName + ' ', ' ' ) );
 		});
@@ -415,7 +415,7 @@ itcast.fn.extend({
 
 
 // 属性操作
-itcast.fn.extend({
+ana.fn.extend({
 	attr: function ( attName, attValue ) {
 		if ( arguments.length == 1 ) {
 			return this[ 0 ][ attName ];
@@ -441,7 +441,7 @@ itcast.fn.extend({
 });
 
 // 内容处理模块
-itcast.extend({
+ana.extend({
 	getInnerText: function ( dom ) {
 		var list = [];
 		if ( dom.innerText !== undefined ) {
@@ -476,7 +476,7 @@ itcast.extend({
 	}
 });
 
-itcast.fn.extend({
+ana.fn.extend({
 	html: function ( html ) {
 		if ( html === undefined ) {
 			// 返回 0 元素的 innerHTML
@@ -491,10 +491,10 @@ itcast.fn.extend({
 	text: function ( text ) {
 		if ( text === undefined ) {
 			// 返回 0 元素的 innerHTML
-			return itcast.getInnerText( this[ 0 ] );
+			return ana.getInnerText( this[ 0 ] );
 		} else {
 			return this.each(function () {
-				itcast.setInnerText( this, text );
+				ana.setInnerText( this, text );
 			});
 		}
 	}
@@ -504,7 +504,7 @@ itcast.fn.extend({
 
 // 动画模块
 // 工具方法
-itcast.extend({
+ana.extend({
 		
 	kv: {
 		left: 'offsetLeft',
@@ -515,7 +515,7 @@ itcast.extend({
 	getDisctance: function ( dom, target ) {
 		var o = {};
 		for ( var k in target ) {
-			o[ k ] = parseInt( target[ k ] ) - dom[ itcast.kv[ k ] ];
+			o[ k ] = parseInt( target[ k ] ) - dom[ ana.kv[ k ] ];
 		}
 		return o;
 	},
@@ -523,7 +523,7 @@ itcast.extend({
 	getLocation: function ( dom, target ) {
 		var o = {};
 		for ( var k in target ) {
-			o[ k ] = dom[ itcast.kv[ k ] ];
+			o[ k ] = dom[ ana.kv[ k ] ];
 		}
 		return o;
 	},
@@ -532,7 +532,7 @@ itcast.extend({
 	easings: function ( x, time, startLocations, target, dur, easingName ) {
 		var o = {}; 
 		for ( var k in target ) { // top, left ...
-			o[ k ] = itcast.easing[ easingName ]( x, time, startLocations[ k ], 
+			o[ k ] = ana.easing[ easingName ]( x, time, startLocations[ k ], 
 										parseInt( target[ k ] ),
 										dur );
 		}
@@ -561,15 +561,15 @@ itcast.extend({
 
 
 // 动画
-itcast.fn.extend({
+ana.fn.extend({
 	timerId: null,
 	animate: function ( target, dur, easingName ) {
 		easingName = easingName || 'liner';
 		var dom = this[ 0 ];
 		
-		var totalDistances = itcast.getDisctance( dom, target ),
+		var totalDistances = ana.getDisctance( dom, target ),
 			startTime = +new Date,
-			startLocations = itcast.getLocation( dom, target ),
+			startLocations = ana.getLocation( dom, target ),
 			
 			
 			stepTime = 25,
@@ -584,10 +584,10 @@ itcast.fn.extend({
 					clearInterval( this.timerId );
 					this.timerId = null;
 				} else {
-					tweens = itcast.easings( null, time, startLocations, target, dur, easingName );
+					tweens = ana.easings( null, time, startLocations, target, dur, easingName );
 				}
 				
-				itcast.setStyle( dom, startLocations, tweens, target );
+				ana.setStyle( dom, startLocations, tweens, target );
 			};
 		play();
 		this.timerId = setInterval( play, stepTime );  // 50Hz
@@ -609,7 +609,7 @@ itcast.fn.extend({
 
 
 // 对外公开
-window.I = window.itcast = itcast;
+window.I = window.ana = ana;
 
 })( window );
 

@@ -17,34 +17,50 @@
 				margin-top: 200px;
 			}
 		</style>
-		<script src="../itcast.js"></script>
+		<script src="../ana.js"></script>
 		<script>
 		
-			var animate = function ( dom, target ) {
-				// 定义一个计时器, 然后每隔一段时间执行修改 dom 对象的 left
-				var step = 20;
-				var play = function () {
-					// 修改 dom 的 left 样式的值, 直到 值等于 target 为止
-					var oldLeft = dom.offsetLeft; // 得到原来的位置
+			// var animate = function ( dom, target ) {
+			// 	// 定义一个计时器, 然后每隔一段时间执行修改 dom 对象的 left
+			// 	var step = 20;
+			// 	var play = function () {
+			// 		// 修改 dom 的 left 样式的值, 直到 值等于 target 为止
+			// 		var oldLeft = dom.offsetLeft; // 得到原来的位置
 					
-					// 累加, 但是如果加后 大于等于 target 则直接设置为 target
-					if ( oldLeft + step >= target ) {
+			// 		// 累加, 但是如果加后 大于等于 target 则直接设置为 target
+			// 		if ( oldLeft + step >= target ) {
+			// 			oldLeft = target;
+			// 			// 停止计时器
+			// 			clearInterval( timer );
+			// 			timer = 0;
+			// 		} else {
+			// 			oldLeft += step;
+			// 		}
+					
+			// 		// 设置回样式
+			// 		dom.style.left = oldLeft + 'px';					
+			// 	};
+				
+			// 	play();
+				
+			// 	var timer = setInterval( play, 25 );  // 50Hz
+			// };
+			var animate = function(dom,target){
+				var step = 20;
+				var play = function(){
+					var oldLeft = dom.offsetLeft;
+					if(oldLeft + step >= target){
 						oldLeft = target;
-						// 停止计时器
-						clearInterval( timer );
+						clearInterval(timer);
 						timer = 0;
 					} else {
 						oldLeft += step;
 					}
-					
-					// 设置回样式
-					dom.style.left = oldLeft + 'px';					
+					div.style.left = oldLeft + 'px';
 				};
-				
 				play();
-				
-				var timer = setInterval( play, 25 );  // 50Hz
-			};
+				var timer = setInterval(play,25);
+			}
 		
 			
 			I(function () {
@@ -61,6 +77,7 @@
 	</head>
 	<body>
 		<div id="box"></div>
+
 		<input type="button" value="动画 animation" id="btn" />
 	</body>
 </html>
