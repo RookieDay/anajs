@@ -56,4 +56,34 @@
             this[k] = obj[k];
         }
     };
+
+    var select = function(selector) {
+        var first = selector.charAt(0),
+            arr = [],
+            node;
+        if (first === '#') {
+            node = document.getElementById(selector.slice(1));
+            if (node) {
+                arr.push.call(arr, node);
+            } else {
+                return null;
+            }
+        } else if (first === '.') {
+            arr.push.apply(arr, document.getElementsByClassName(selector.slice(1)));
+        } else {
+            arr.push.apply(arr, document.getElementsByTagName(selector.slice(1)));
+        }
+        return arr;
+    }
+    var parseHTML = function(html) {
+        var div = document.createElement('div'),
+            arr = [],
+            i;
+        div.innerHTML = html;
+        for (i = 0; i < div.childNodes.length; i++) {
+            arr.push(div.childNodes);
+        }
+        return arr; //返回获取到的DOM数组
+    }
+
 })(window);
