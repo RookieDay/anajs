@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+    <style type="text/css">
+        * {
+            padding: 0;
+            margin: 0;
+            list-style: none;
+            border: 0;
+        }
+        
+        .all {
+            width: 500px;
+            height: 200px;
+            padding: 7px;
+            border: 1px solid #ccc;
+            margin: 100px auto;
+            position: relative;
+        }
+        
+        .screen {
+            width: 500px;
+            height: 200px;
+            /*overflow: hidden;*/
+            position: relative;
+        }
+        
+        .screen li {
+            width: 500px;
+            height: 200px;
+            overflow: hidden;
+            float: left;
+        }
+        
+        .screen ul {
+            position: absolute;
+            left: 0;
+            top: 0px;
+            width: 3000px;
+        }
+        
+        .all ol {
+            position: absolute;
+            right: 10px;
+            bottom: 10px;
+            line-height: 20px;
+            text-align: center;
+        }
+        
+        .all ol li {
+            float: left;
+            width: 20px;
+            height: 20px;
+            background: #fff;
+            border: 1px solid #ccc;
+            margin-left: 10px;
+            cursor: pointer;
+        }
+        
+        .all ol li.current {
+            background: yellow;
+        }
+        
+        #arr {
+            display: none;
+        }
+        
+        #arr span {
+            width: 40px;
+            height: 40px;
+            position: absolute;
+            left: 5px;
+            top: 50%;
+            margin-top: -20px;
+            background: #000;
+            cursor: pointer;
+            line-height: 40px;
+            text-align: center;
+            font-weight: bold;
+            font-family: '黑体';
+            font-size: 30px;
+            color: #fff;
+            opacity: 0.3;
+            border: 1px solid #fff;
+        }
+        
+        #arr #right {
+            right: 5px;
+            left: auto;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="all" id='box'>
+        <div class="screen">
+            <ul>
+                <li><img src="images/1.jpg" width="500" height="200" /></li>
+                <li><img src="images/2.jpg" width="500" height="200" /></li>
+                <li><img src="images/3.jpg" width="500" height="200" /></li>
+                <li><img src="images/4.jpg" width="500" height="200" /></li>
+                <li><img src="images/5.jpg" width="500" height="200" /></li>
+            </ul>
+            <ol>
+            </ol>
+        </div>
+        <div id="arr"><span id="left">&lt;</span><span id="right">&gt;</span></div>
+    </div>
+</body>
+
+</html>
+<script>
+    function $(id) {
+        return document.getElementById(id);
+    }
+    var box = $("box");
+    var arr = $("arr");
+    var arrRight = $("right");
+    var arrLeft = $("left");
+    var screen = box.children[0];
+    var ul = screen.children[0];
+    var ol = screen.children[1];
+    var ulLis = ul.children;
+    var imgWidth = screen.offsetWidth;
+    var timer = null;
+
+    for (var i = 0; i < ulLis.length; i++) {
+        var li = document.createElement("li");
+        li.innerHTML = i + 1;
+        ol.appendChild(li);
+    }
+    var olLis = ol.children;
+    olLis[0].className = "current";
+    var firstImg = ulLis[0].cloneNode(true);
+    ul.appendChild(firstImg);
+    for (var j = 0; j < olLis.length; j++) {
+        olLis[j].index = j;
+        olLis[j].onmouseover = function() {
+            for (var k = 0; k < olLis.length; k++) {
+                olLis[k].className = "";
+            }
+            this.className = "current";
+            var target = -this.index * imgWidth;
+            animate(ul, target);
+            pic = square = this.index;
+        }
+    }
+    box.onmouseover = function() {
+        arr.style.display = "block";
+        clearInterval(timer);
+    }
+    box.onmouseout = function() {
+        arr.style.display = "none";
+        timer = setInterval(playNext, 1000);
+    }
+    var pic = 0;
+    var square = 0;
+    arrRight.onclick = function() {
+        playNext();
+    }
+    arrLeft.onclick = function() {
+        if (pic == 0) {
+            ul.style.left = -imgWidth * (ulLis.length - 1) + "px";
+            pic = ulLis.length - 1;
+        }
+        pic--;
+        var target = -pic * imgWidth;
+        animate(ul, target);
+        if (square > 0) {
+            square++;
+        } else {
+            square = olLis.legth - 1;
+        }
+        for (var i = 0; i < olLis.length; i++) {
+            olLis[i].className = "";
+        }
+        olLis[square].className = "current";
+    }
+
+    function playNext() {
+        if (pic == ulLis.length - 1) {
+            ul.style.left = 0;
+            pic = 0;
+        }
+        pic++;
+        var target = -pic * imgWidth;
+        animate(ul, target);
+        if (square < olLis.length - 1) {
+            square++;
+        } else {
+            square = 0;
+        }
+        for (var i = 0; i < olLis.length; i++) {
+            olLis[i].className = "";
+        }
+        olLis[square].className = "current";
+    }
+
+    function animate(obj, target) {
+        clearInterval(obj.timer);
+        obj.timer = setInterval(function() {
+            var leader = obj.offsetLeft;
+            var step = 20;
+            step = leader < target ? step : -step;
+            if (Math.abs(leader - target) > Math.abs(step)) {
+                obj.style.left = leader + step + "px";
+            } else {
+                clearInterval(obj.timer);
+                obj.style.left = target + "px";
+            }
+
+        }, 25);
+    }
+</script>
