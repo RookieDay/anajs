@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>省市县</title>
+</head>
+<body>
+	<select name="province" id="province"></select>
+	<select name="city" id="city"></select>
+	<select name="district" id="district"></select>
+
+	<script src="./js/jquery.min.js"></script>
+	<script src="./js/template-native.js"></script>
+	<script>
+		// 取出一个地区的所结果
+		// 1、父一级结果的ID
+		// 2、当前从属于哪个级别
+		// 3、创建HTML元素即select
+
+		// 1、想取省一级 p 想取市一级 c 想取县一级 d
+		// 2、c + p一级级的ID
+		// 3、d + c一级的ID
+		// 4、p + 000000
+
+		// 取出省一级
+		$.ajax({
+			url: 'region.php',
+			type: 'get',
+			// pid 表示父一级ID
+			// type 表示当前属于哪个级别，也就是要告服务器
+			// 应该去哪儿获取数据
+			data: {type: 'p', pid: '000000'},
+			success: function (info) {
+				// console.log(info);
+
+				var data = {
+					opt: info
+				}
+
+				// 调用模板
+				var html = template('tpl', data);
+
+				// console.log(html);
+
+				$('#province').append(html);
+			}
+		});
+
+		// 取出市一级
+		$('#province').on('change', function () {
+
+			var pid = $(this).val();
+
+			// 清空后面所有节点内容
+			$(this).nextAll().empty();
+
+			$.ajax({
+				url: 'region.php',
+				type: 'get',
+				data: {type: 'c', pid: pid},
+				success: function (info) {
+					console.log(info);
+
+					var data = {
+						opt: info
+					}
+
+					var html = template('tpl', data);
+
+					$('#city').empty().append(html);
+				}
+			});
+		});
+
+		// 县一级
+		$('#city').on('change', function () {
+
+			var pid = $(this).val();
+
+			// 清空后面所有节点内容
+			$(this).nextAll().empty();
+
+			$.ajax({
+				url: 'region.php',
+				type: 'get',
+				// 
+				data: {type: 'd', pid: pid},
+				success: function (info) {
+					console.log(info);
+
+					var data = {
+						opt: info
+					}
+
+					var html = template('tpl', data);
+
+					$('#district').empty().append(html);
+				}
+			});
+		});
+	</script>
+	<script type="text/template" id="tpl">
+		<% for(var key in opt) { %>
+			<option value="<%= key %>"><%= opt[key] %></option>
+		<% } %>
+	</script>
+</body>
+</html>

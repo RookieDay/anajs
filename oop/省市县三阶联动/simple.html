@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>省市县</title>
+</head>
+<body>
+	<select name="province" id="province"></select>
+	<select name="city" id="city"></select>
+	<select name="district" id="district"></select>
+
+	<script src="jquery.min.js"></script>
+	<script>
+		// 三级联动菜单
+		(function (select) {
+			// 数据映射
+			var map = ['p', 'c', 'd'];
+
+			// 遍历节点
+			$.each(select, function (key, val) {
+				// 修改DOM
+				$('#' + val).attr({
+					'data-level': key
+				})
+
+				// 事件监听
+				.on('change', function () {
+					var _this = $(this),
+						level = parseInt(_this.attr('data-level')),
+						pid = _this.val() || '000000',
+						select;
+
+					// 首次请求省级列表
+					if(level == 0 && !_this.children().size()) {
+						type = map[level];
+					} else {
+						level = level + 1;
+					}
+
+					// 省/市/区县
+					type = map[level];
+					select = $('[data-level='+ level +']');
+
+					// 请求数据
+					$.ajax({
+						url: 'region.php',
+						type: 'get',
+						dataType: 'json',
+						data: {type: type, pid: pid},
+						success: function (data) {
+							// 清空下一级的数据
+							$('[data-level]').each(function () {
+								if($(this).attr('data-level') >= level) {
+									$(this).empty();
+								}
+							});
+
+							// 拼凑字符串
+							var opts = '';
+							for(var k in data) {
+								opts += '<option value="' + k + '">' + data[k] + '</option>';
+							}
+
+							select.append(opts);
+						}
+					});
+				});
+			});
+
+			// 首次请求
+			$('select[data-level=0]').trigger('change');
+
+		})(['province', 'city', 'district']);
+
+	</script>
+</body>
+</html>
