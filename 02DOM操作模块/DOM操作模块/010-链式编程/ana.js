@@ -33,10 +33,10 @@
             if (ana.isString(selector)) {
                 if (selector.charAt(0) === '<') {
                     // this.elements = parseHTML( selector );
-                    ana.push.apply(this, parseHTML(selector));
+                    ana.push.apply(this, ana.parseHTML(selector));
                 } else {
                     // this.elements = select( selector );
-                    ana.push.apply(this, select(selector));
+                    ana.push.apply(this, ana.select(selector));
                     this.selector = selector;
                 }
                 return this;
@@ -60,6 +60,10 @@
 
                 return this;
             }
+        },
+        each: function(callback) {
+            ana.each(this, callback);
+            return this;
         }
     };
     ana.fn.init.prototype = ana.prototype;
@@ -72,6 +76,7 @@
             this[k] = obj[k];
         }
     };
+
 
     var select = function(selector) {
         var first = selector.charAt(0),
@@ -102,6 +107,12 @@
         }
         return arr;
     };
+
+
+    ana.extend({
+        select: select,
+        parseHTML: parseHTML
+    });
 
     // 基本的工具方法
     ana.extend({
@@ -152,6 +163,49 @@
 
 
     // 基本的 DOM 操作
+    // 工具方法
+    ana.extend({
+        firstChild: function(dom) {
+            /*var i, node, len = dom.childNodes.length;
+            for ( i = 0; i < len; i++ ) {
+                node = dom.childNodes[ i ];
+                if ( node.nodeType === 1 ) {
+                    return node;
+                }
+            }*/
+
+
+            var node;
+            ana.each(dom.childNodes, function(i, v) {
+                // 遍历子元素
+                if (this.nodeType === 1) {
+                    node = this;
+                    return false;
+                }
+            });
+            return node;
+
+        },
+        nextSibling: function(dom) {
+            var newDom = dom;
+            while (newDom = newDom.nextSibling) {
+                if (newDom.nodeType === 1) {
+                    return newDom;
+                }
+            }
+        },
+        nextAll: function(dom) {
+            var newDom = dom,
+                arr = [];
+            while (newDom = newDom.nextSibling) {
+                if (newDom.nodeType === 1) {
+                    arr.push(newDom);
+                }
+            }
+            return arr;
+        }
+    });
+    // 实例方法
     ana.fn.extend({
         appendTo: function(selector) {
             var objs = ana(selector),
@@ -176,11 +230,57 @@
             ana(selector).appendTo(this);
             return this;
         },
-        each: function(callback) {
-            ana.each(this, callback);
+        prependTo: function(selector) {
+            // 谁加到谁上
+            var objs = ana(selector),
+                len1 = this.length,
+                len2 = objs.length,
+                i, j;
+            for (i = 0; i < len2; i++) {
+                for (j = 0; j < len1; j++) {
+                    // 将 this[ j ] 加到 objs[ i ] 的内部的最前面
+                    objs[i].insertBefore(i === len2 - 1 ?
+                        this[j] :
+                        this[j].cloneNode(true),
+                        ana.firstChild(objs[i]));
+                }
+            }
+
             return this;
+        },
+        prepend: function(selector) {
+            // selector 加到 this 上
+            ana(selector).prependTo(this);
+            return this;
+        },
+        remove: function() {
+            // 将 this 删除
+            var i, len = this.length;
+            for (i = 0; i < len; i++) { // 有一个 bug
+                this[i].parentNode.removeChild(this[i]);
+            }
+
+            return this;
+        },
+        next: function() {
+            // 找到 this 的下一个元素
+            var arr = [];
+            ana.each(this, function(i, v) {
+                arr.push(ana.nextSibling(v)); // bug
+            });
+            return ana(arr);
+        },
+        nextAll: function() {
+            var arr = [];
+            ana.each(this, function(i, v) {
+                ana.push.apply(arr, ana.nextAll(v)); // bug
+            });
+            return ana(arr);
         }
     });
+
+
+    // 事件模块
 
 
 
